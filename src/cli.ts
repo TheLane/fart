@@ -8,8 +8,9 @@ import { Interpreter } from "./interpreter.js";
 import { formatSource } from "./formatter.js";
 import { bagHelp, initBag, installBag, listBags } from "./bag.js";
 import { publishBag, searchBags, installRemoteBag, startStation } from "./station.js";
+import { GasInspector } from "./debugger.js";
 
-export const VERSION = "1.3.0";
+export const VERSION = "1.4.0";
 export const DEFAULT_STATION = "http://127.0.0.1:4873";
 
 export function parseSource(source: string) {
@@ -49,6 +50,7 @@ function printHelp(): void {
   console.log("  fart bag search [query]        Search Gas Station");
   console.log("  fart bag list                  List installed bags");
   console.log("  fart station [port]            Start a local Gas Station");
+  console.log("  fart inspect <file> [--break N] Debug with Gas Inspector");
   console.log("  fart repl                      Start the Fart REPL");
   console.log("  fart --version                 Show version");
   console.log("  fart --help                    Show this help");
@@ -133,6 +135,14 @@ export async function main(args = process.argv.slice(2)): Promise<number> {
   if (args.length === 0 || args[0] === "--help" || args[0] === "-h") { printHelp(); return 0; }
   if (args[0] === "--version" || args[0] === "-v") { console.log(VERSION); return 0; }
   if (args[0] === "repl") { await repl(); return 0; }
+  if (args[0] === "inspect") {
+    const file=args[1];
+    if(!file){console.error("FART ERROR: inspect needs a .fart file.");return 1;}
+    if(!fs.existsSync(file)){console.error("FART ERROR: File not found: "+file);return 1;}
+    const breaks=[];
+    for(let i=2;i<args.length;i++)if(args[i]==="--break"||args[i]==="-b"){const n=Number(args[++i]);if(Number.isInteger(n)&&n>0)breaks.push(n);}
+    try{const source=fs.readFileSync(file,"utf8"),program=parseSource(source),interpreter=new Interpreter(),inspector=new GasInspector(source,breaks);inspector.start(interpreter);interpreter.interpret(program);interpreter.runMain();return 0;}catch(error){console.error(formatError(error));return 1;}
+  }
   if (args[0] === "station") {
     const port = Number(args[1] ?? 4873);
     startStation(port);

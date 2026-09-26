@@ -2,6 +2,7 @@ import type { FunctionDeclaration, Statement, AstNode } from "./ast.js";
 export type BuiltinFunction = (...args: RuntimeValue[]) => RuntimeValue;
 export type RuntimeValue = number | string | boolean | null | RuntimeArray | FartFunction | BuiltinFunction;
 export type RuntimeArray = RuntimeValue[];
+
 export class Environment {
   private values = new Map<string, RuntimeValue>();
   constructor(public enclosing: Environment | null = null) {}
@@ -16,6 +17,7 @@ export class Environment {
     if (this.enclosing) { this.enclosing.assign(name, value); return; }
     throw new Error("Undefined variable '" + name + "'.");
   }
+  entries(): Array<[string, RuntimeValue]> { return [...this.values.entries()]; }
 }
 export class RuntimeError extends Error {
   constructor(message: string, public node: AstNode | null = null) { super(message); this.name = "RuntimeError"; }

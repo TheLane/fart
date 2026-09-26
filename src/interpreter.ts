@@ -2,8 +2,11 @@ import { TokenType } from "./token.js";
 import { FunctionDeclaration, VariableDeclaration, Block, IfStatement, WhileStatement, ReleaseStatement, ExpressionStatement, Assignment, Binary, Unary, Literal, Variable, Call, ArrayLiteral, Index, IndexAssignment } from "./ast.js";
 import { Environment, RuntimeError, ReturnSignal, FartFunction } from "./runtime.js";
 import { installStdlib } from "./stdlib.js";
+import type { Statement } from "./ast.js";
 
 export class Interpreter {
+  debugHook: ((event: { statement: Statement; interpreter: Interpreter }) => void) | null = null;
+  debugCall: ((name: string, entering: boolean) => void) | null = null;
   output: (...values: string[]) => void;
   globals: Environment;
   environment: Environment;
@@ -39,6 +42,7 @@ export class Interpreter {
   }
 
   execute(node) {
+    if (this.debugHook && node.line > 0) this.debugHook({ statement: node, interpreter: this });
     if (node instanceof FunctionDeclaration) {
       this.environment.define(node.name, new FartFunction(node, this.environment, this));
       return null;
@@ -164,7 +168,8 @@ export class Interpreter {
   callValue(callee, args, node) {
     if (callee instanceof FartFunction) {
       if (args.length !== callee.arity()) throw new RuntimeError("Expected " + callee.arity() + " arguments but got " + args.length + ".", node);
-      return callee.call(args);
+      this.debugCall?.(callee.declaration.name, true);
+      try { return callee.call(args); } finally { this.debugCall?.(callee.declaration.name, false); }
     }
     if (typeof callee === "function") return Reflect.apply(callee, null, args);
     throw new RuntimeError("Can only call a fart or a built-in function.", node);
