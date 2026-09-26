@@ -190,3 +190,9 @@ npm.cmd test:
 ### Следующий шаг
 
 v0.4.0 — Interpreter.
+
+## 2026-09-26 � v0.6.0 � functions and scopes
+
+Completed the function/runtime phase. Fart now has function calls with parameters, return values through `release`, nested lexical scopes, closures and argument-count validation. Added dedicated interpreter tests; full suite: 15/15 passing.
+
+The v0.5.0 interpreter files were also cleaned up so AST definitions live only in `src/ast.js`, runtime support in `src/runtime.js`, and execution in `src/interpreter.js`.

@@ -1,6 +1,6 @@
 # Fart Roadmap
 
-## Phase 0 — Specification — NOW
+## Phase 0 вЂ” Specification вЂ” NOW
 
 - [x] Project name: Fart
 - [x] `.fart` extension
@@ -15,7 +15,7 @@
 - [x] Decide semicolon policy
 - [ ] Freeze runtime semantics
 
-## Phase 1 — Project skeleton
+## Phase 1 вЂ” Project skeleton
 
 - [x] Initialize Node.js project
 - [x] Create source tree
@@ -27,7 +27,7 @@
 
 Target: `fart --version` and `fart examples/hello.fart`.
 
-## Phase 2 — Lexer
+## Phase 2 вЂ” Lexer
 
 - [x] Identifiers
 - [x] Numbers
@@ -40,7 +40,7 @@ Target: `fart --version` and `fart examples/hello.fart`.
 
 Implement identifiers, numbers, strings, punctuation, operators, keywords, comments and source positions.
 
-## Phase 3 — Parser
+## Phase 3 вЂ” Parser
 
 - [x] Define MVP grammar
 - [x] Define AST node model
@@ -52,7 +52,7 @@ Implement AST nodes for program, functions, variables, assignment, binary/unary 
 
 Goal: source -> tokens -> AST.
 
-## Phase 4 — Interpreter
+## Phase 4 вЂ” Interpreter
 
 Implement environments, variables, arithmetic, comparisons, boolean logic, functions, calls, conditionals, loops, return values and runtime errors.
 
@@ -69,42 +69,56 @@ fart main() {
 }
 ~~~
 
-## Phase 5 — CLI and REPL
+## Phase 5 вЂ” CLI and REPL
 
 Commands: `fart file.fart`, `fart repl`, `fart --help`, `fart --version`.
 
 REPL should support multiline functions, useful errors, clean exit and history where practical.
 
-## Phase 6 — Standard library
+## Phase 6 вЂ” Standard library
 
 Potential library: smell, string utilities, math, random, time and arrays. Keep it small.
 
-## Phase 7 — Developer experience
+## Phase 7 вЂ” Developer experience
 
 VS Code syntax highlighting, formatter, syntax checker, better diagnostics, examples and documentation.
 
 Possible names: Fart Formatter, Gas Inspector, Fart Linter, Fart Chamber.
 
-## Phase 8 — Modules and packages
+## Phase 8 вЂ” Modules and packages
 
 Only after the core language is stable.
 
 Possible terminology: package = bag, package manager = Fart Bag, dependency = gas dependency, registry = Gas Station.
 
-## Phase 9 — Bytecode / VM
+## Phase 9 вЂ” Bytecode / VM
 
 Optional but desirable. Pipeline: `.fart` -> lexer -> parser -> AST -> bytecode compiler -> Fart VM.
 
 The tree-walk interpreter remains the reference implementation.
 
-## Phase 10 — Fart 1.0
+## Phase 10 вЂ” Fart 1.0
 
 Frozen syntax, documented semantics, comprehensive tests, stable CLI, standard library baseline, examples, formatter and good diagnostics.
 
-## Phase 11 — The ridiculous stuff
+## Phase 11 вЂ” The ridiculous stuff
 
 Package registry, Fart Bag, Air Freshener garbage collector branding, Gas Inspector debugger, animated CLI messages, web playground, WASM target and eventually Fart written in Fart.
 
 ## Guiding rule
 
 **The joke is the presentation. The implementation should be serious.**
+
+## Phase 6 — Functions and scopes
+
+- [x] Function declarations
+- [x] Parameters and arguments
+- [x] Function calls
+- [x] `release` return values
+- [x] Lexical environments
+- [x] Nested block scopes
+- [x] Closures
+- [x] Arity checks
+- [x] Function runtime tests
+
+Target: functions behave as first-class values and capture their defining environment.
