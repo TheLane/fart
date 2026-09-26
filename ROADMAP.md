@@ -11,8 +11,8 @@
 - [x] Functions
 - [x] Initial built-ins
 - [x] Error philosophy
-- [ ] Freeze MVP grammar
-- [ ] Decide semicolon policy
+- [x] Freeze MVP grammar
+- [x] Decide semicolon policy
 - [ ] Freeze runtime semantics
 
 ## Phase 1 — Project skeleton
@@ -41,6 +41,12 @@ Target: `fart --version` and `fart examples/hello.fart`.
 Implement identifiers, numbers, strings, punctuation, operators, keywords, comments and source positions.
 
 ## Phase 3 — Parser
+
+- [x] Define MVP grammar
+- [x] Define AST node model
+- [x] Implement recursive-descent parser
+- [x] Add parser diagnostics
+- [x] Add parser tests
 
 Implement AST nodes for program, functions, variables, assignment, binary/unary expressions, calls, if/else, while, return/release and blocks.
 
