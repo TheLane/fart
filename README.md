@@ -11,7 +11,7 @@ lexer, parser, runtime, standard library, CLI, formatter and test suite.
 
 ## Status
 
-**Stable 1.6.0**
+**Stable 1.7.0**
 
 The implementation is written in TypeScript and runs on Node.js. The language uses:
 
@@ -143,7 +143,7 @@ fart run build/my-fart.fat
 
 **Шутка — в подаче. Реализация — всерьёз.**
 
-Текущая версия: **1.6.0**.
+Текущая версия: **1.7.0**.
 
 ### Репозиторий
 

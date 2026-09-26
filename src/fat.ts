@@ -4,7 +4,7 @@ import path from "node:path";
 import { Lexer } from "./lexer.js";
 import { Parser } from "./parser.js";
 import { Interpreter } from "./interpreter.js";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { readManifest, type BagManifest } from "./bag.js";
 
 export type FatKind = "fat" | "fatter";
@@ -111,15 +111,36 @@ export function unpackFat(file: string, targetDir: string): FatBundle {
   return bundle;
 }
 
-export function runFat(file: string, output = console.log): void {
+export async function runFat(file: string, output = console.log): Promise<void> {
   const bundle = readFat(file);
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), "fart-fat-"));
   try {
     unpackFat(file, temp);
+    if (bundle.format === "FATTER" && bundle.runtime) {
+      for (const [name, encoded] of Object.entries(bundle.runtime.files)) {
+        safeRelative(name);
+        const target = path.join(temp, name);
+        fs.mkdirSync(path.dirname(target), { recursive: true });
+        fs.writeFileSync(target, Buffer.from(encoded, "base64"));
+      }
+    }
     const source = fs.readFileSync(path.join(temp, bundle.main), "utf8");
-    const tokens = new Lexer(source).scanTokens();
-    const program = new Parser(tokens).parse();
-    const interpreter = new Interpreter(output);
+    let LexerClass = Lexer;
+    let ParserClass = Parser;
+    let InterpreterClass = Interpreter;
+    if (bundle.format === "FATTER" && bundle.runtime) {
+      const stamp = `?fatter=${Date.now()}-${Math.random()}`;
+      const runtimeRoot = path.join(temp, "dist");
+      const lexerModule = await import(pathToFileURL(path.join(runtimeRoot, "lexer.js")).href + stamp);
+      const parserModule = await import(pathToFileURL(path.join(runtimeRoot, "parser.js")).href + stamp);
+      const interpreterModule = await import(pathToFileURL(path.join(runtimeRoot, "interpreter.js")).href + stamp);
+      LexerClass = lexerModule.Lexer as typeof Lexer;
+      ParserClass = parserModule.Parser as typeof Parser;
+      InterpreterClass = interpreterModule.Interpreter as typeof Interpreter;
+    }
+    const tokens = new LexerClass(source).scanTokens();
+    const program = new ParserClass(tokens).parse();
+    const interpreter = new InterpreterClass(output);
     interpreter.interpret(program);
     interpreter.runMain();
   } finally {
@@ -135,8 +156,9 @@ export function fatHelp(): string {
     "  fart build --fat [dir]       Build a .fat bundle",
     "  fart build --fatter [dir]    Build a .fatter bundle with runtime snapshot",
     "  fart run <file.fat>          Run a FAT bundle",
+    "  fart run <file.fatter>       Run a self-contained FATTER snapshot",
     "",
     "FAT is a portable Fart project bundle. FATTER additionally carries a",
-    "snapshot of the Fart runtime. Both currently require Node.js to run.",
+    "snapshot of the Fart runtime. FATTER runs from its embedded runtime snapshot.",
   ].join("\n");
 }

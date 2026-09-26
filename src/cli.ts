@@ -11,7 +11,7 @@ import { publishBag, searchBags, installRemoteBag, startStation } from "./statio
 import { GasInspector } from "./debugger.js";
 import { buildFat, fatHelp, runFat } from "./fat.js";
 
-export const VERSION = "1.6.0";
+export const VERSION = "1.7.0";
 export const DEFAULT_STATION = "http://127.0.0.1:4873";
 
 export function parseSource(source: string) {
@@ -165,7 +165,7 @@ export async function main(args = process.argv.slice(2)): Promise<number> {
   if (args[0] === "run") {
     const file = args[1];
     if (!file) { console.error("FART ERROR: run needs a .fat or .fatter file."); return 1; }
-    try { runFat(file); return 0; }
+    try { await runFat(file); return 0; }
     catch (error) { console.error(formatError(error)); return 1; }
   }
   if (args[0] === "station") {

@@ -18,6 +18,7 @@
 - [x] Phase 13 — Gas Inspector debugger (Fart 1.4)
 - [x] Phase 14 — TypeScript strict hardening (Fart 1.5)
 - [x] Phase 15 — FAT/FATTER application bundles (Fart 1.6)
+- [x] Phase 16 — Self-contained FATTER runtime snapshots (Fart 1.7)
 
 ## Fart 1.0
 

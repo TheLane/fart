@@ -18,25 +18,28 @@ test("buildFat creates a runnable FAT bundle", () => {
   assert.equal(bundle.format, "FAT");
   assert.equal(bundle.main, "main.fart");
 });
-test("runFat executes a FAT bundle", () => {
+test("runFat executes a FAT bundle", async () => {
   const project = tempDir("fart-fat-");
   initBag(project);
   fs.writeFileSync(path.join(project, "main.fart"), "fart main() { smell(40 + 2); }\n", "utf8");
   const output = buildFat(project, "fat");
   const lines = [];
-  runFat(output, value => lines.push(String(value)));
+  await runFat(output, value => lines.push(String(value)));
   assert.deepEqual(lines, ["42"]);
 });
 
-test("FATTER carries a runtime snapshot", () => {
+test("FATTER carries and uses a runtime snapshot", async () => {
   const project = tempDir("fart-fatter-");
   initBag(project);
-  fs.writeFileSync(path.join(project, "main.fart"), "fart main() { release 42; }\n", "utf8");
+  fs.writeFileSync(path.join(project, "main.fart"), 'fart main() { smell("snapshot"); }\n', "utf8");
   const output = buildFat(project, "fatter");
   const bundle = readFat(output);
   assert.equal(bundle.format, "FATTER");
   assert.equal(bundle.runtime?.engine, "node");
   assert.ok(Object.keys(bundle.runtime?.files ?? {}).length > 0);
+  const lines = [];
+  await runFat(output, value => lines.push(String(value)));
+  assert.deepEqual(lines, ["snapshot"]);
 });
 test("unpackFat restores source files", () => {
   const project = tempDir("fart-fat-");
