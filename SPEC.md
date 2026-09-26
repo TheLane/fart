@@ -1,6 +1,6 @@
 # Fart Language Specification
 
-Version: 0.1-draft
+Version: 0.2.0
 
 ## 1. Identity
 
@@ -50,8 +50,7 @@ Initial set:
 - `if` — conditional
 - `else` — alternative branch
 - `while` — loop
-- `return` — conventional return
-- `release` — humorous return spelling; decision still open
+- `release` — return a value from a function
 - `true`
 - `false`
 - `null`
@@ -60,7 +59,7 @@ Initial set:
 
 `smell(value)` prints a value to standard output.
 
-`release(value)` is planned as the humorous return form.
+`release(value)` is the planned humorous return form; the lexer reserves `release` as a keyword.
 
 Example:
 

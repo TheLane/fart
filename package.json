@@ -1,0 +1,13 @@
+{
+  "name": "fart-language",
+  "version": "0.2.0",
+  "description": "Fart — a programming language that stinks, but runs.",
+  "type": "module",
+  "private": true,
+  "bin": { "fart": "src/cli.js" },
+  "scripts": {
+    "test": "node --test",
+    "test:lexer": "node --test test/lexer.test.js"
+  },
+  "engines": { "node": ">=20" }
+}

@@ -17,10 +17,10 @@
 
 ## Phase 1 — Project skeleton
 
-- [ ] Initialize Node.js project
-- [ ] Create source tree
+- [x] Initialize Node.js project
+- [x] Create source tree
+- [x] Add test runner
 - [ ] Add CLI executable
-- [ ] Add test runner
 - [ ] Add lint/format configuration
 - [ ] Add first examples
 - [ ] Add version command
@@ -28,6 +28,15 @@
 Target: `fart --version` and `fart examples/hello.fart`.
 
 ## Phase 2 — Lexer
+
+- [x] Identifiers
+- [x] Numbers
+- [x] Strings
+- [x] Punctuation and operators
+- [x] Keywords
+- [x] Line comments
+- [x] Source line/column positions
+- [x] Lexer diagnostics
 
 Implement identifiers, numbers, strings, punctuation, operators, keywords, comments and source positions.
 
