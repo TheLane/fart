@@ -83,6 +83,6 @@ export class Parser {
   check(type:TokenTypeValue):boolean { if(this.isAtEnd())return type===TokenType.EOF;return this.peek().type===type; }
   advance():Token { if(!this.isAtEnd())this.current++;return this.previous(); }
   isAtEnd():boolean{return this.peek().type===TokenType.EOF;}
-  peek():Token{return this.tokens[this.current] ?? this.tokens[this.tokens.length-1];}
-  previous():Token{return this.tokens[this.current-1] ?? this.tokens[0];}
+  peek():Token{return this.tokens[this.current] ?? this.tokens[this.tokens.length-1]!;}
+  previous():Token{return this.tokens[this.current-1] ?? this.tokens[0]!;}
 }

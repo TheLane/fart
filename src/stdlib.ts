@@ -1,7 +1,8 @@
-import { RuntimeError } from "./runtime.js";
+import { RuntimeError, type Environment, type RuntimeValue } from "./runtime.js";
+import type { Interpreter } from "./interpreter.js";
 
-export function installStdlib(environment, runtime) {
-  const number = (name, fn) => environment.define(name, value => {
+export function installStdlib(environment: Environment, runtime: Interpreter): void {
+  const number = (name: string, fn: (value: number) => number) => environment.define(name, (value: RuntimeValue) => {
     if (typeof value !== "number") throw new RuntimeError(name + " needs a number.");
     return fn(value);
   });
@@ -15,22 +16,22 @@ export function installStdlib(environment, runtime) {
     return Math.sqrt(value);
   });
 
-  environment.define("upper", value => {
+  environment.define("upper", (value: RuntimeValue) => {
     if (typeof value !== "string") throw new RuntimeError("upper needs a string.");
     return value.toUpperCase();
   });
 
-  environment.define("lower", value => {
+  environment.define("lower", (value: RuntimeValue) => {
     if (typeof value !== "string") throw new RuntimeError("lower needs a string.");
     return value.toLowerCase();
   });
 
-  environment.define("trim", value => {
+  environment.define("trim", (value: RuntimeValue) => {
     if (typeof value !== "string") throw new RuntimeError("trim needs a string.");
     return value.trim();
   });
 
-  environment.define("contains", (value, part) => {
+  environment.define("contains", (value: RuntimeValue, part: RuntimeValue) => {
     if (typeof value !== "string" || typeof part !== "string") {
       throw new RuntimeError("contains needs two strings.");
     }
@@ -41,12 +42,12 @@ export function installStdlib(environment, runtime) {
 
   environment.define("now", () => Date.now());
 
-  environment.define("type", value => {
+  environment.define("type", (value: RuntimeValue) => {
     if (value === null) return "null";
     if (Array.isArray(value)) return "array";
     if (typeof value === "function") return "function";
     return typeof value;
   });
 
-  environment.define("stringify", value => runtime.stringify(value));
+  environment.define("stringify", (value: RuntimeValue) => runtime.stringify(value));
 }

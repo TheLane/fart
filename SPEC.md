@@ -1,6 +1,6 @@
 # Fart Language Specification
 
-**Version:** 1.4.0
+**Version:** 1.5.0
 **Status:** Stable
 
 ## 1. Philosophy

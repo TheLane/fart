@@ -11,7 +11,7 @@ lexer, parser, runtime, standard library, CLI, formatter and test suite.
 
 ## Status
 
-**Stable 1.4.0**
+**Stable 1.5.0**
 
 The implementation is written in TypeScript and runs on Node.js. The language uses:
 
@@ -81,7 +81,7 @@ fart main() {
 - Gas Station package registry
 - Gas Inspector debugger
 - TypeScript implementation
-- 38 automated tests
+- 40 automated tests
 
 See [SPEC.md](SPEC.md) for the language reference,
 [docs/tutorial.md](docs/tutorial.md) for the beginner tutorial,
@@ -137,7 +137,7 @@ fart inspect examples/hello.fart
 
 **Шутка — в подаче. Реализация — всерьёз.**
 
-Текущая версия: **1.4.0**.
+Текущая версия: **1.5.0**.
 
 ### Репозиторий
 

@@ -320,3 +320,20 @@ this documented behavior or use normal Semantic Versioning when compatibility ch
 ### Следующий этап
 
 Следующий крупный этап — Air Freshener: усиление типизации TypeScript, постепенное включение strict mode и повышение качества внутренних API без изменения пользовательского синтаксиса.
+
+
+## 2026-09-27 — v1.5.0 — Air Freshener / strict TypeScript
+
+### Что сделано
+
+- Включён `strict` mode TypeScript.
+- Включены `noUncheckedIndexedAccess` и `exactOptionalPropertyTypes`.
+- Убраны неявные `any` из interpreter, formatter и standard library.
+- Добавлены явные типы для RuntimeValue, AST и callback boundaries.
+- Усилена типобезопасность индексации массивов и параметров функций.
+- Добавлены тесты Gas Inspector.
+- Полный набор: 40/40 тестов.
+
+### Решение
+
+Внутренний TypeScript-код теперь собирается в полном strict mode. Пользовательский синтаксис Fart не изменён.

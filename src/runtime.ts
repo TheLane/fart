@@ -32,7 +32,7 @@ export class FartFunction {
   constructor(public declaration: FunctionDeclaration, public closure: Environment, public interpreter: CallableInterpreter) {}
   call(args: RuntimeValue[]): RuntimeValue {
     const environment = new Environment(this.closure);
-    for (let i = 0; i < this.declaration.params.length; i++) environment.define(this.declaration.params[i], args[i] ?? null);
+    for (let i = 0; i < this.declaration.params.length; i++) environment.define(this.declaration.params[i]!, args[i] ?? null);
     try { this.interpreter.executeBlock(this.declaration.body.statements, environment); }
     catch (error) { if (error instanceof ReturnSignal) return error.value; throw error; }
     return null;

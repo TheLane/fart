@@ -10,7 +10,7 @@ import { bagHelp, initBag, installBag, listBags } from "./bag.js";
 import { publishBag, searchBags, installRemoteBag, startStation } from "./station.js";
 import { GasInspector } from "./debugger.js";
 
-export const VERSION = "1.4.0";
+export const VERSION = "1.5.0";
 export const DEFAULT_STATION = "http://127.0.0.1:4873";
 
 export function parseSource(source: string) {
@@ -168,6 +168,7 @@ export async function main(args = process.argv.slice(2)): Promise<number> {
     catch (error) { console.error(formatError(error)); return 1; }
   }
   const file = args[0];
+  if (typeof file !== "string") { console.error("FART ERROR: File not found: "); return 1; }
   if (!fs.existsSync(file)) { console.error("FART ERROR: File not found: " + file); return 1; }
   try { execute(fs.readFileSync(file, "utf8")); return 0; }
   catch (error) { console.error(formatError(error)); return 1; }

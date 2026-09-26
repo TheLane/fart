@@ -37,12 +37,13 @@ function readPackageFiles(root: string): Record<string, string> {
 
 function packageFromDir(dir: string): RegistryPackage {
   const manifest = readManifest(dir);
-  return {
+  const pkg: RegistryPackage = {
     ...manifest,
-    description: manifest.description,
     publishedAt: new Date().toISOString(),
     files: readPackageFiles(path.resolve(dir))
   };
+  if (manifest.description !== undefined) pkg.description = manifest.description;
+  return pkg;
 }
 
 function registryDir(root: string, name: string, version: string): string {

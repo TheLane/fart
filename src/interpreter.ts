@@ -1,6 +1,6 @@
 import { TokenType } from "./token.js";
 import { FunctionDeclaration, VariableDeclaration, Block, IfStatement, WhileStatement, ReleaseStatement, ExpressionStatement, Assignment, Binary, Unary, Literal, Variable, Call, ArrayLiteral, Index, IndexAssignment } from "./ast.js";
-import { Environment, RuntimeError, ReturnSignal, FartFunction } from "./runtime.js";
+import { Environment, RuntimeError, ReturnSignal, FartFunction, type RuntimeValue } from "./runtime.js";
 import { installStdlib } from "./stdlib.js";
 import type { Statement } from "./ast.js";
 
@@ -25,23 +25,23 @@ export class Interpreter {
     installStdlib(this.globals, this);
   }
 
-  interpret(program) {
+  interpret(program: import("./ast.js").Program): void {
     try {
       for (const statement of program.statements) this.execute(statement);
     } catch (error) {
       if (error instanceof ReturnSignal) throw new RuntimeError("release used outside a fart.");
       if (error instanceof RuntimeError) throw error;
-      throw new RuntimeError(error.message);
+      throw new RuntimeError(error instanceof Error ? error.message : String(error));
     }
   }
 
-  runMain() {
+  runMain(): RuntimeValue {
     let main;
     try { main = this.globals.get("main"); } catch { throw new RuntimeError("No main fart found."); }
     return this.callValue(main, [], null);
   }
 
-  execute(node) {
+  execute(node: Statement): RuntimeValue | null {
     if (this.debugHook && node.line > 0) this.debugHook({ statement: node, interpreter: this });
     if (node instanceof FunctionDeclaration) {
       this.environment.define(node.name, new FartFunction(node, this.environment, this));
@@ -52,7 +52,7 @@ export class Interpreter {
       this.environment.define(node.name, value);
       return null;
     }
-    if (node instanceof Block) return this.executeBlock(node.statements, new Environment(this.environment));
+    if (node instanceof Block) { this.executeBlock(node.statements, new Environment(this.environment)); return null; }
     if (node instanceof IfStatement) {
       if (this.isTruthy(this.evaluate(node.condition))) return this.execute(node.thenBranch);
       if (node.elseBranch) return this.execute(node.elseBranch);
@@ -67,7 +67,7 @@ export class Interpreter {
     throw new RuntimeError("Unknown statement.", node);
   }
 
-  executeBlock(statements, environment) {
+  executeBlock(statements: Statement[], environment: Environment): void {
     const previous = this.environment;
     try {
       this.environment = environment;
@@ -77,7 +77,7 @@ export class Interpreter {
     }
   }
 
-  evaluate(node) {
+  evaluate(node: import("./ast.js").Expression): RuntimeValue {
     if (node instanceof Literal) return node.value;
     if (node instanceof ArrayLiteral) return node.elements.map(element => this.evaluate(element));
     if (node instanceof Index) {
@@ -119,7 +119,7 @@ export class Interpreter {
     throw new RuntimeError("Unknown expression.", node);
   }
 
-  evaluateBinary(node) {
+  evaluateBinary(node: Binary): RuntimeValue {
     if (node.operator === TokenType.OR_OR) {
       const left = this.evaluate(node.left);
       return this.isTruthy(left) ? left : this.evaluate(node.right);
@@ -151,21 +151,21 @@ export class Interpreter {
     }
   }
 
-  numeric(a, b, node, op) {
+  numeric(a: RuntimeValue, b: RuntimeValue, node: Binary, op: (a: number, b: number) => number): number {
     if (typeof a !== "number" || typeof b !== "number") throw new RuntimeError("Operands must be numbers.", node);
     return op(a, b);
   }
 
-  compare(a, b, node, op) {
+  compare(a: RuntimeValue, b: RuntimeValue, node: Binary, op: (a: number, b: number) => boolean): boolean {
     if (typeof a !== "number" || typeof b !== "number") throw new RuntimeError("Operands must be numbers.", node);
     return op(a, b);
   }
 
-  requireNumber(value, node) {
+  requireNumber(value: RuntimeValue, node: import("./ast.js").AstNode): asserts value is number {
     if (typeof value !== "number") throw new RuntimeError("Operand must be a number.", node);
   }
 
-  callValue(callee, args, node) {
+  callValue(callee: RuntimeValue, args: RuntimeValue[], node: import("./ast.js").AstNode | null): RuntimeValue {
     if (callee instanceof FartFunction) {
       if (args.length !== callee.arity()) throw new RuntimeError("Expected " + callee.arity() + " arguments but got " + args.length + ".", node);
       this.debugCall?.(callee.declaration.name, true);
@@ -175,24 +175,28 @@ export class Interpreter {
     throw new RuntimeError("Can only call a fart or a built-in function.", node);
   }
 
-  isTruthy(value) { return value !== null && value !== false; }
-  isEqual(a, b) { return a === b; }
+  isTruthy(value: RuntimeValue): boolean { return value !== null && value !== false; }
+  isEqual(a: RuntimeValue, b: RuntimeValue): boolean { return a === b; }
 
-  readIndex(object, index, node) {
+  readIndex(object: RuntimeValue, index: RuntimeValue, node: import("./ast.js").AstNode): RuntimeValue {
     if (!Array.isArray(object) && typeof object !== "string") throw new RuntimeError("Can only index an array or string.", node);
-    if (!Number.isInteger(index)) throw new RuntimeError("Array index must be an integer.", node);
+    this.requireIndex(index, node);
     if (index < 0 || index >= object.length) throw new RuntimeError("Array index out of bounds.", node);
-    return object[index];
+    return object[index] ?? null;
   }
 
-  writeIndex(object, index, value, node) {
+  writeIndex(object: RuntimeValue, index: RuntimeValue, value: RuntimeValue, node: import("./ast.js").AstNode): void {
     if (!Array.isArray(object)) throw new RuntimeError("Can only assign an array element.", node);
-    if (!Number.isInteger(index)) throw new RuntimeError("Array index must be an integer.", node);
+    this.requireIndex(index, node);
     if (index < 0 || index >= object.length) throw new RuntimeError("Array index out of bounds.", node);
     object[index] = value;
   }
 
-  stringify(value) {
+  requireIndex(value: RuntimeValue, node: import("./ast.js").AstNode): asserts value is number {
+    if (!Number.isInteger(value)) throw new RuntimeError("Array index must be an integer.", node);
+  }
+
+  stringify(value: RuntimeValue): string {
     if (value === null) return "null";
     if (value === true) return "true";
     if (value === false) return "false";

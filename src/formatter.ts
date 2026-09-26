@@ -14,10 +14,10 @@ const wordLike: Set<TokenTypeValue> = new Set([
   TokenType.WHILE, TokenType.RELEASE, TokenType.TRUE, TokenType.FALSE, TokenType.NULL
 ]);
 
-export function formatSource(source) {
+export function formatSource(source: string): string {
   const tokens = new Lexer(source).scanTokens().filter(token => token.type !== TokenType.EOF);
   const comments = extractComments(source);
-  const lines = [];
+  const lines: string[] = [];
   let current = "";
   let indent = 0;
   let parens = 0;
@@ -82,7 +82,7 @@ export function formatSource(source) {
   return withComments.join("\n") + (withComments.length ? "\n" : "");
 }
 
-function extractComments(source) {
+function extractComments(source: string): Map<number, string[]> {
   const result = new Map();
   let line = 1;
   let i = 0;
@@ -111,12 +111,12 @@ function extractComments(source) {
   return result;
 }
 
-function addComments(lines, comments) {
+function addComments(lines: string[], comments: Map<number, string[]>): string[] {
   const output = [...lines];
   for (const [line, list] of comments) {
     const text = list.join("  ");
     const target = Math.min(output.length - 1, line - 1);
-    if (target >= 0 && output[target].trim()) output[target] += "  " + text;
+    if (target >= 0 && output[target]!.trim()) output[target] += "  " + text;
     else output.push(text);
   }
   return output;
