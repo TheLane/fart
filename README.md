@@ -1,6 +1,10 @@
 # Fart Programming Language
 
-> A programming language that stinks, but runs.
+> A real programming language that stinks, but runs.
+
+**[GitHub repository](https://github.com/TheLane/fart)** · **[Русская версия ниже](#русская-версия)**
+
+[English](#fart-programming-language) | [Русский](#русская-версия)
 
 Fart is a deliberately humorous programming language with a real interpreter,
 lexer, parser, runtime, standard library, CLI, formatter and test suite.
@@ -82,3 +86,46 @@ See [SPEC.md](SPEC.md) for the language reference,
 ## Project rule
 
 **The joke is the presentation. The implementation should be serious.**
+
+## Русская версия
+
+> Fart — настоящий язык программирования, который воняет, но работает.
+
+Fart — экспериментальный шуточный язык программирования с настоящим лексером, парсером, AST, интерпретатором, стандартной библиотекой, REPL, форматтером и тестами.
+
+Проект написан на Node.js. Архитектура:
+
+`исходный код -> lexer -> parser -> AST -> interpreter`
+
+### Быстрый старт
+
+Требуется Node.js 20+.
+
+```text
+fart examples/hello.fart
+fart check examples/hello.fart
+fart fmt examples/hello.fart
+fart repl
+```
+
+### Что уже умеет Fart
+
+- переменные и присваивание
+- числа, строки, boolean и null
+- арифметические, сравнительные и логические операторы
+- `if/else` и `while`
+- функции, параметры, замыкания и `release`
+- массивы и индексация
+- `smell`, `length` и стандартная библиотека
+- REPL и проверка синтаксиса
+- форматирование исходного кода
+- диагностика с номерами строк и столбцов
+- автоматические тесты
+
+Документация: [SPEC.md](SPEC.md), [учебник](docs/tutorial.md), [ROADMAP.md](ROADMAP.md).
+
+**Шутка — в подаче. Реализация — всерьёз.**
+
+### Репозиторий
+
+⭐ [github.com/TheLane/fart](https://github.com/TheLane/fart) — исходный код, документация, примеры и история проекта.
