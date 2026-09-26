@@ -15,6 +15,7 @@
 - [x] Phase 10 — Fart 1.0
 - [x] Phase 11 — TypeScript migration (Fart 1.2)
 - [x] Phase 12 — Gas Station registry (Fart 1.3)
+- [x] Phase 13 — Gas Inspector debugger (Fart 1.4)
 
 ## Fart 1.0
 
@@ -37,8 +38,8 @@ documented behavior.
 Possible future projects:
 
 - [x] Fart Bag local package manager groundwork
-- Gas Station package registry
-- Gas Inspector debugger
+- [x] Gas Station package registry
+- [x] Gas Inspector debugger
 - Air Freshener garbage collector branding
 - animated CLI messages
 - web playground

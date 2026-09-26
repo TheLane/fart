@@ -2,16 +2,16 @@
 
 > A real programming language that stinks, but runs.
 
-**[GitHub repository](https://github.com/TheLane/fart)** В· **[Р СѓСЃСЃРєР°СЏ РІРµСЂСЃРёСЏ РЅРёР¶Рµ](#СЂСѓСЃСЃРєР°СЏ-РІРµСЂСЃРёСЏ)**
+**[GitHub repository](https://github.com/TheLane/fart)** · **[Русская версия ниже](#русская-версия)**
 
-[English](#fart-programming-language) | [Р СѓСЃСЃРєРёР№](#СЂСѓСЃСЃРєР°СЏ-РІРµСЂСЃРёСЏ)
+[English](#fart-programming-language) | [Русский](#русская-версия)
 
 Fart is a deliberately humorous programming language with a real interpreter,
 lexer, parser, runtime, standard library, CLI, formatter and test suite.
 
 ## Status
 
-**Stable 1.3.0**
+**Stable 1.4.0**
 
 The implementation is written in TypeScript and runs on Node.js. The language uses:
 
@@ -78,30 +78,33 @@ fart main() {
 - formatter
 - line/column diagnostics
 - Fart Bag local package manager groundwork
-- 37 automated tests
+- Gas Station package registry
+- Gas Inspector debugger
+- TypeScript implementation
+- 38 automated tests
 
 See [SPEC.md](SPEC.md) for the language reference,
 [docs/tutorial.md](docs/tutorial.md) for the beginner tutorial,
-[docs/bag.md and docs/gas-station.md](docs/bag.md) for Fart Bag, and
+[docs/bag.md](docs/bag.md), [docs/gas-station.md](docs/gas-station.md), and [docs/gas-inspector.md](docs/gas-inspector.md) for Fart Bag, Gas Station, and Gas Inspector, and
 [ROADMAP.md](ROADMAP.md) for project history.
 
 ## Project rule
 
 **The joke is the presentation. The implementation should be serious.**
 
-## Р СѓСЃСЃРєР°СЏ РІРµСЂСЃРёСЏ
+## Русская версия
 
-> Fart вЂ” РЅР°СЃС‚РѕСЏС‰РёР№ СЏР·С‹Рє РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёСЏ, РєРѕС‚РѕСЂС‹Р№ РІРѕРЅСЏРµС‚, РЅРѕ СЂР°Р±РѕС‚Р°РµС‚.
+> Fart — настоящий язык программирования, который воняет, но работает.
 
-Fart вЂ” СЌРєСЃРїРµСЂРёРјРµРЅС‚Р°Р»СЊРЅС‹Р№ С€СѓС‚РѕС‡РЅС‹Р№ СЏР·С‹Рє РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёСЏ СЃ РЅР°СЃС‚РѕСЏС‰РёРј Р»РµРєСЃРµСЂРѕРј, РїР°СЂСЃРµСЂРѕРј, AST, РёРЅС‚РµСЂРїСЂРµС‚Р°С‚РѕСЂРѕРј, СЃС‚Р°РЅРґР°СЂС‚РЅРѕР№ Р±РёР±Р»РёРѕС‚РµРєРѕР№, REPL, С„РѕСЂРјР°С‚С‚РµСЂРѕРј Рё С‚РµСЃС‚Р°РјРё.
+Fart — экспериментальный шуточный язык программирования с настоящим лексером, парсером, AST, интерпретатором, стандартной библиотекой, REPL, форматтером и тестами.
 
-РџСЂРѕРµРєС‚ РЅР°РїРёСЃР°РЅ РЅР° Node.js. РђСЂС…РёС‚РµРєС‚СѓСЂР°:
+Проект написан на Node.js. Архитектура:
 
-`РёСЃС…РѕРґРЅС‹Р№ РєРѕРґ -> lexer -> parser -> AST -> interpreter`
+`исходный код -> lexer -> parser -> AST -> interpreter`
 
-### Р‘С‹СЃС‚СЂС‹Р№ СЃС‚Р°СЂС‚
+### Быстрый старт
 
-РўСЂРµР±СѓРµС‚СЃСЏ Node.js 20+.
+Требуется Node.js 20+.
 
 ```text
 fart examples/hello.fart
@@ -110,26 +113,32 @@ fart fmt examples/hello.fart
 fart repl
 fart bag init
 fart bag list
+fart station
+fart inspect examples/hello.fart
 ```
 
-### Р§С‚Рѕ СѓР¶Рµ СѓРјРµРµС‚ Fart
+### Что уже умеет Fart
 
-- РїРµСЂРµРјРµРЅРЅС‹Рµ Рё РїСЂРёСЃРІР°РёРІР°РЅРёРµ
-- С‡РёСЃР»Р°, СЃС‚СЂРѕРєРё, boolean Рё null
-- Р°СЂРёС„РјРµС‚РёС‡РµСЃРєРёРµ, СЃСЂР°РІРЅРёС‚РµР»СЊРЅС‹Рµ Рё Р»РѕРіРёС‡РµСЃРєРёРµ РѕРїРµСЂР°С‚РѕСЂС‹
-- `if/else` Рё `while`
-- С„СѓРЅРєС†РёРё, РїР°СЂР°РјРµС‚СЂС‹, Р·Р°РјС‹РєР°РЅРёСЏ Рё `release`
-- РјР°СЃСЃРёРІС‹ Рё РёРЅРґРµРєСЃР°С†РёСЏ
-- `smell`, `length` Рё СЃС‚Р°РЅРґР°СЂС‚РЅР°СЏ Р±РёР±Р»РёРѕС‚РµРєР°
-- REPL Рё РїСЂРѕРІРµСЂРєР° СЃРёРЅС‚Р°РєСЃРёСЃР°
-- С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ РёСЃС…РѕРґРЅРѕРіРѕ РєРѕРґР°
-- РґРёР°РіРЅРѕСЃС‚РёРєР° СЃ РЅРѕРјРµСЂР°РјРё СЃС‚СЂРѕРє Рё СЃС‚РѕР»Р±С†РѕРІ
-- Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРёРµ С‚РµСЃС‚С‹
+- переменные и присваивание
+- числа, строки, boolean и null
+- арифметические, сравнительные и логические операторы
+- `if/else` и `while`
+- функции, параметры, замыкания и `release`
+- массивы и индексация
+- `smell`, `length` и стандартная библиотека
+- REPL и проверка синтаксиса
+- форматирование исходного кода
+- диагностика с номерами строк и столбцов
+- автоматические тесты
+- Gas Station и удалённая установка пакетов
+- Gas Inspector для пошаговой отладки
 
-Р”РѕРєСѓРјРµРЅС‚Р°С†РёСЏ: [SPEC.md](SPEC.md), [СѓС‡РµР±РЅРёРє](docs/tutorial.md), [ROADMAP.md](ROADMAP.md).
+Документация: [SPEC.md](SPEC.md), [учебник](docs/tutorial.md), [ROADMAP.md](ROADMAP.md).
 
-**РЁСѓС‚РєР° вЂ” РІ РїРѕРґР°С‡Рµ. Р РµР°Р»РёР·Р°С†РёСЏ вЂ” РІСЃРµСЂСЊС‘Р·.**
+**Шутка — в подаче. Реализация — всерьёз.**
 
-### Р РµРїРѕР·РёС‚РѕСЂРёР№
+Текущая версия: **1.4.0**.
 
-в­ђ [github.com/TheLane/fart](https://github.com/TheLane/fart) вЂ” РёСЃС…РѕРґРЅС‹Р№ РєРѕРґ, РґРѕРєСѓРјРµРЅС‚Р°С†РёСЏ, РїСЂРёРјРµСЂС‹ Рё РёСЃС‚РѕСЂРёСЏ РїСЂРѕРµРєС‚Р°.
+### Репозиторий
+
+⭐ [github.com/TheLane/fart](https://github.com/TheLane/fart) — исходный код, документация, примеры и история проекта.

@@ -1,6 +1,6 @@
 # Fart Language Specification
 
-**Version:** 1.2.0
+**Version:** 1.4.0
 **Status:** Stable
 
 ## 1. Philosophy
@@ -123,11 +123,14 @@ fart fmt --write <file.fart>
 fart repl
 fart --version
 fart --help
+fart inspect <file.fart> [--break <line>]
 ```
 
 `check` performs lexical and syntactic analysis without executing code.
 
 `fmt` prints formatted source. `fmt --write` formats the file in place.
+
+`inspect` starts the Gas Inspector debugger for a source file.
 
 ## 12. Diagnostics
 
