@@ -2,32 +2,70 @@
 
 > A programming language that stinks, but runs.
 
-Fart is a deliberately humorous programming language project. The joke is part of the language design, but the implementation is intended to be real, usable, testable, and technically interesting.
+Fart is a deliberately humorous programming language with a real interpreter,
+lexer, parser, runtime, standard library, CLI and test suite.
 
 ## Status
 
-**Phase:** Specification
+**Stable MVP — v0.9.0**
 
-The first implementation target is a small interpreted language running on Node.js.
+The language runs on Node.js and uses the pipeline:
 
-## Design goals
+`source -> lexer -> parser -> AST -> interpreter`
 
-- Real executable programs, not just a joke syntax.
-- Tiny and understandable core.
-- Friendly implementation for experimentation and extension.
-- Consistent humorous terminology.
-- Useful error messages.
-- Excellent REPL experience.
-- Easy transition from interpreter to bytecode/VM later.
+The joke is the presentation. The implementation is serious.
 
-## First milestone
+## Quick start
 
-Run `fart hello.fart` and execute:
+Requirements: Node.js 20+.
 
-~~~fart
+Run a program:
+
+```text
+fart examples/hello.fart
+```
+
+Check syntax without executing:
+
+```text
+fart check examples/hello.fart
+```
+
+Start the REPL:
+
+```text
+fart repl
+```
+
+Show the version:
+
+```text
+fart --version
+```
+
+## Example
+
+```fart
 fart main() {
-    smell("Hello, world!");
+    let gas = [10, 20, 30];
+    smell("Gas bag:", gas);
+    release gas[1] + 22;
 }
-~~~
+```
 
-See SPEC.md and ROADMAP.md.
+## Core features
+
+- variables and assignment
+- numbers, strings, booleans and null
+- arithmetic, comparison and logical operators
+- if/else and while
+- functions, parameters, closures and release
+- arrays and indexing
+- built-in `smell` and `length`
+- standard library helpers
+- REPL and syntax checking
+- line/column diagnostics
+- 32 automated tests
+
+See [SPEC.md](SPEC.md) for the language reference and [ROADMAP.md](ROADMAP.md)
+for the development history.

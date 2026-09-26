@@ -215,3 +215,32 @@ Also introduced a living example gallery in `examples/` and `docs/jokes.md` for 
 - Added five standard-library tests.
 - Full test suite: 25/25 passing.
 - The joke remains the presentation; the implementation remains serious.
+
+## 2026-09-26 — v0.9.0 — Stable MVP
+
+### Что сделано
+
+- зафиксирован MVP как стабильная база перед 1.0;
+- обновлена CLI до версии 0.9.0;
+- добавлена команда `fart check <file>` для лексической и синтаксической проверки без запуска;
+- CLI-диагностика теперь показывает тип ошибки и line/column;
+- REPL получил `.version` и сохраняет один Interpreter между вводами;
+- обновлены README и SPEC.md до фактически реализованного языка;
+- добавлены edge-case тесты для release без значения, short-circuit, пустых массивов
+  и строк, вложенной индексации, деления на ноль и неверной арности;
+- полный набор: 32/32 теста.
+
+### Проверка
+
+Проверены:
+
+- `npm.cmd test` — 32/32;
+- `fart --version` — 0.9.0;
+- `fart check examples/hello.fart` — синтаксис корректен;
+- реальный запуск `examples/hello.fart` — 3, 2, 1.
+
+### Решение
+
+v0.9.0 становится стабильным MVP-базисом для подготовки Fart 1.0.
+Следующий крупный этап — стабилизация публичного синтаксиса, форматтер,
+расширенная диагностика и учебная документация.

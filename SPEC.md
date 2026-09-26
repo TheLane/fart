@@ -1,262 +1,210 @@
 # Fart Language Specification
 
-Version: 0.3.0
+**Version:** 0.9.0  
+**Status:** Stable MVP
 
-## 1. Identity
+## 1. Philosophy
 
-Name: Fart
-Extension: `.fart`
-CLI: `fart`
-Implementation language: Node.js
-Initial execution model: tree-walk interpreter
+Fart is a small interpreted language whose terminology is intentionally
+ridiculous while its implementation remains conventional.
 
-Tagline: **Fart — a programming language that stinks, but runs.**
+The implementation pipeline is:
 
-The language should be funny in its vocabulary without making the implementation unnecessarily complicated.
+`source -> Lexer -> Parser -> AST -> Interpreter`
 
-## 2. Core principles
+User-facing terminology is humorous, but internal implementation terms such as
+Lexer, Parser, AST, Environment and Interpreter remain standard.
 
-1. A valid Fart program must be executable.
-2. Syntax should be small enough to learn in one sitting.
-3. Humorous vocabulary should remain internally consistent.
-4. Ordinary programming concepts remain recognizable underneath the joke.
-5. Errors should be memorable but technically useful.
-6. The language must be deterministic and easy to test.
+## 2. Source files
 
-## 3. Source files
+Fart source files use the `.fart` extension.
 
-UTF-8 text with the `.fart` extension.
+Comments begin with `//` and continue to the end of the line.
 
-Comments initially use `//`.
+Statements and declarations end with a semicolon where the grammar specifies one.
 
-## 4. Program entry point
+## 3. Types
 
-Conventional entry point:
-
-~~~fart
-fart main() {
-    smell("Hello, world!");
-}
-~~~
-
-The interpreter executes `main()` when it exists.
-
-## 5. Keywords
-
-Initial set:
-
-- `fart` — function declaration
-- `let` — variable declaration
-- `if` — conditional
-- `else` — alternative branch
-- `while` — loop
-- `release` — return a value from a function
-- `true`
-- `false`
-- `null`
-
-## 6. Built-ins
-
-`smell(value)` prints a value to standard output.
-
-`release(value)` is the planned humorous return form; the lexer reserves `release` as a keyword.
-
-Example:
-
-~~~fart
-fart add(a, b) {
-    release a + b;
-}
-~~~
-
-## 7. Types
-
-MVP types:
+The MVP supports:
 
 - Number
 - String
 - Boolean
 - Null
 - Function
+- Array
 
-Planned later: Array and Object.
+Numbers are JavaScript-style floating-point numbers.
 
-Example:
+Arrays are mutable and zero-indexed.
 
-~~~fart
+Truthiness: `false` and `null` are false; every other value is true.
+
+## 4. Variables
+
+```fart
 let gas = 42;
-let message = "too much gas";
-let active = true;
-let nothing = null;
-~~~
-
-## 8. Expressions
-
-Arithmetic: `+ - * /`
-
-Comparison: `== != < <= > >=`
-
-Logical: `&& || !`
-
-Parentheses control precedence.
-
-## 9. Statements
-
-Variable declaration:
-
-~~~fart
-let gas = 10;
-~~~
-
-Assignment:
-
-~~~fart
+let message = "hello";
 gas = gas + 1;
-~~~
+```
 
-Conditional:
+A declaration without an initializer receives `null`.
+## 5. Functions
 
-~~~fart
-if (gas > 10) {
-    smell("TOO MUCH GAS!");
-} else {
-    smell("Gas level acceptable.");
-}
-~~~
+Functions are declared with the `fart` keyword.
 
-Loop:
-
-~~~fart
-while (gas < 10) {
-    gas = gas + 1;
-}
-~~~
-
-Function:
-
-~~~fart
+```fart
 fart add(a, b) {
     release a + b;
 }
-~~~
+```
 
-## 10. Function calls
+Functions may be assigned to variables and passed as values.
 
-~~~fart
-let result = add(2, 3);
-smell(result);
-~~~
+A function without `release` returns `null`.
 
-Functions are intended to be first-class values.
+`release;` is valid and also returns `null`.
 
-## 11. Truthiness
+Functions use lexical scoping and can form closures.
 
-For MVP:
+## 6. Conditions and loops
 
-- `false` is false.
-- `null` is false.
-- Everything else is true.
+```fart
+if (gas > 10) {
+    smell("too much gas");
+} else {
+    smell("fine");
+}
 
-This may be revised before 1.0.
+while (gas < 100) {
+    gas = gas + 1;
+}
+```
 
-## 12. Runtime terminology
+## 7. Arrays
 
-| Technical concept | Fart terminology |
-|---|---|
-| Variable | gas |
-| Function | fart |
-| Return | release |
-| Output | smell |
-| Error | stink |
-| Exception | explosion |
-| Loop | wind |
-| Package | bag |
-| Dependency | gas dependency |
-| Compiler | Fart Compiler |
-| Runtime | Fart Chamber |
-| Debugger | Gas Inspector |
-| Garbage collector | Air Freshener |
+Array literals use square brackets:
 
-These are project terminology, not necessarily all language keywords.
+```fart
+let bag = [10, 20, 30];
+smell(bag[1]);
+bag[1] = 99;
+```
 
-## 13. Errors
+Indexes must be integers and remain within bounds.
 
-Errors must contain useful technical information.
+Nested arrays are supported.
 
-Example:
+## 8. Operators
 
-~~~text
-FART ERROR
-Something stinks at line 12, column 7.
+Arithmetic: `+ - * /`
 
-Expected expression, found '}'
+Comparison: `> >= < <=`
 
-  12 |     smell(;
-                 ^
-~~~
+Equality: `== !=`
 
-Runtime errors may use `FART STINK` followed by the real cause and source location.
+Logical: `&& || !`
 
-## 14. CLI
+Arithmetic and comparison operands must have compatible numeric types.
+The `+` operator accepts two numbers or two strings.
 
-Initial commands:
+Logical operators short-circuit.
+## 9. Built-ins and standard library
 
-- `fart file.fart`
-- `fart repl`
-- `fart --version`
-- `fart --help`
+Core built-ins:
 
-Possible future commands: `fart check`, `fart format`, `fart compile`, `fart run`.
+- `smell(...values)` — output values
+- `length(value)` — length of an array or string
 
-## 15. REPL
+Standard library:
 
-Example:
+- `abs`, `floor`, `ceil`, `round`, `sqrt`
+- `upper`, `lower`, `trim`, `contains`
+- `random`, `now`, `type`, `stringify`
 
-~~~text
-Fart REPL v0.1
-Ready to release some code.
+## 10. Program entry point
 
-fart> smell("hello")
-hello
-~~~
+A source file executed with the CLI is expected to define:
 
-Startup text should be configurable or suppressible for scripting.
+```fart
+fart main() {
+    // program
+}
+```
 
-## 16. Grammar direction
+The CLI executes `main()` after the source has been interpreted.
 
-Target expression grammar:
+The REPL does not require a `main` function and keeps one interpreter
+environment across inputs.
 
-~~~text
-program -> declaration*
+## 11. CLI
+
+```text
+fart <file.fart>
+fart check <file.fart>
+fart repl
+fart --version
+fart --help
+```
+
+`fart check` performs lexical and syntactic analysis without executing code.
+
+Successful checking prints:
+
+```text
+No stink detected. Syntax is clean.
+```
+## 12. Diagnostics
+
+Lexer and parser errors include line and column information.
+
+The CLI presents lexer failures as `FART STINK` and other failures as
+`FART ERROR`.
+
+Runtime errors include useful messages such as undefined variables, invalid
+operators, invalid indexes, division by zero and incorrect function arity.
+
+## 13. MVP grammar
+
+```text
+program -> declaration* EOF
+
 declaration -> functionDeclaration | statement
-statement -> variableDeclaration | ifStatement | whileStatement | returnStatement | expressionStatement | block
-expression -> assignment | logicalOr | logicalAnd | equality | comparison | term | factor | unary | call | primary
-~~~
 
-The exact grammar will be frozen after the lexer/parser prototype.
+functionDeclaration -> "fart" IDENTIFIER "(" parameters? ")" block
+parameters -> IDENTIFIER ("," IDENTIFIER)*
 
-## 17. Non-goals for MVP
+statement -> letStatement | ifStatement | whileStatement
+           | releaseStatement | block | expressionStatement
 
-Do not initially implement classes, async/await, modules, package registry, native compilation, static types, macros or concurrency.
+letStatement -> "let" IDENTIFIER ("=" expression)? ";"
+ifStatement -> "if" "(" expression ")" statement ("else" statement)?
+whileStatement -> "while" "(" expression ")" statement
+releaseStatement -> "release" expression? ";"
+block -> "{" declaration* "}"
+expressionStatement -> expression ";"
 
-## 18. Compatibility
+expression -> assignment
+assignment -> IDENTIFIER "=" assignment | index "=" assignment | logicalOr
+logicalOr -> logicalAnd ("||" logicalAnd)*
+logicalAnd -> equality ("&&" equality)*
+equality -> comparison (("==" | "!=") comparison)*
+comparison -> term ((">" | ">=" | "<" | "<=") term)*
+term -> factor (("+" | "-") factor)*
+factor -> unary (("*" | "/") unary)*
+unary -> ("!" | "-") unary | call
+call -> primary (("(" arguments? ")") | ("[" expression "]"))*
+primary -> NUMBER | STRING | true | false | null | IDENTIFIER
+          | arrayLiteral | "(" expression ")"
+arrayLiteral -> "[" (expression ("," expression)*)? "]"
+arguments -> expression ("," expression)*
+```
 
-Fart 0.x may change syntax. Starting with 1.0, syntax changes require a documented language version.
+## 14. Stability boundary
 
-## 19. Testing
+Version 0.9.0 freezes the current MVP semantics as the baseline for 1.0 work.
+New features may be added before 1.0, but existing documented behavior should
+not be changed casually.
 
-Every feature needs tests for valid syntax, runtime behavior, invalid syntax and useful error location/message.
-
-Executable examples live under `examples/`.
-
-## 20. Open design questions
-
-- Is `release` the only return keyword, or should `return` remain available?
-- Is `smell` the only standard output function?
-- Array/object syntax?
-- Module syntax?
-- Package manager naming?
-- Bytecode/VM strategy?
-- How far should humorous terminology extend into tooling?
-- Are semicolons mandatory?
-- Do we want automatic semicolon insertion?
+Not part of the MVP: classes, async/await, modules, static typing, macros,
+concurrency, native compilation and package management.

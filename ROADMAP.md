@@ -63,3 +63,28 @@ Possible future projects:
 ## Living examples and jokes
 
 The examples directory is an executable gallery of the language. docs/jokes.md is the living home for Fart terminology and jokes; update it whenever new language features create new opportunities for terrible humor.
+
+## Phase 9 — Stable MVP — completed in v0.9.0
+
+- [x] Freeze runtime semantics
+- [x] Improve runtime/CLI diagnostics
+- [x] Add edge-case tests
+- [x] Review CLI/REPL behavior
+- [x] Document language reference
+- [x] Add `fart check`
+- [x] Prepare and tag 0.9.0
+
+The v0.9.0 baseline has 32 automated tests. The CLI now separates syntax checking
+from execution, and the REPL keeps a persistent interpreter environment.
+
+## Phase 10 — Fart 1.0
+
+- [ ] Frozen syntax
+- [ ] Documented semantics
+- [ ] Stable CLI
+- [ ] Standard library baseline
+- [ ] Comprehensive tests
+- [ ] Formatter
+- [ ] High-quality diagnostics
+- [ ] Examples and tutorial
+
