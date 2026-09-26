@@ -13,7 +13,7 @@ import { buildFat, fatHelp, runFat } from "./fat.js";
 import { Compiler } from "./compiler.js";
 import { VirtualMachine } from "./vm.js";
 
-export const VERSION = "1.8.0";
+export const VERSION = "1.9.0";
 export const DEFAULT_STATION = "http://127.0.0.1:4873";
 
 export function parseSource(source: string) {

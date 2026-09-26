@@ -20,6 +20,7 @@
 - [x] Phase 15 — FAT/FATTER application bundles (Fart 1.6)
 - [x] Phase 16 — Self-contained FATTER runtime snapshots (Fart 1.7)
 - [x] Phase 17 — Experimental bytecode compiler and Gas Engine VM (Fart 1.8)
+- [x] Phase 18 — VM semantic parity: short-circuit and standard library (Fart 1.9)
 
 ## Fart 1.0
 

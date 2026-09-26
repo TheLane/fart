@@ -11,7 +11,7 @@ lexer, parser, runtime, standard library, CLI, formatter and test suite.
 
 ## Status
 
-**Stable 1.8.0**
+**Stable 1.9.0**
 
 The implementation is written in TypeScript and runs on Node.js. The language uses:
 
@@ -86,7 +86,7 @@ fart main() {
 - FAT/FATTER application bundles
 - Gas Station and Gas Inspector tooling
 - experimental bytecode compiler and Gas Engine VM
-- 47 automated tests
+- 49 automated tests
 
 See [SPEC.md](SPEC.md) for the language reference,
 [docs/tutorial.md](docs/tutorial.md) for the beginner tutorial,
@@ -148,7 +148,7 @@ fart run build/my-fart.fat
 
 **Шутка — в подаче. Реализация — всерьёз.**
 
-Текущая версия: **1.8.0**.
+Текущая версия: **1.9.0**.
 
 ### Репозиторий
 
