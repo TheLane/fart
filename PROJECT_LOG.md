@@ -270,3 +270,16 @@ v0.9.0 СЃС‚Р°РЅРѕРІРёС‚СЃСЏ СЃС‚Р°Р±РёР»СЊ�
 
 Fart 1.0.0 is the stable language baseline. Future changes should preserve
 this documented behavior or use normal Semantic Versioning when compatibility changes.
+
+## 2026-09-26 — v1.1.0 — Fart Bag groundwork
+
+- Repository made public on GitHub.
+- README expanded with English/Russian presentation and direct repository links.
+- GitHub description and discovery topics configured.
+- MIT license added.
+- package metadata now contains keywords, repository, homepage, and issue tracker.
+- Fart Bag introduced as a local package-manager foundation.
+- `fart bag init`, `fart bag install <dir>`, and `fart bag list` added.
+- Local packages use `fart.json` and install into `fart_modules`.
+- Added Fart Bag documentation and automated tests.
+- Full test suite: 37/37.

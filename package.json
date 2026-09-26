@@ -1,6 +1,6 @@
 {
   "name": "fart-language",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Fart — a real programming language that stinks, but runs.",
   "keywords": ["fart", "programming-language", "interpreter", "esolang", "nodejs", "javascript", "compiler"],
   "homepage": "https://github.com/TheLane/fart#readme",

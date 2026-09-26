@@ -34,7 +34,7 @@ documented behavior.
 
 Possible future projects:
 
-- Fart Bag package manager
+- [x] Fart Bag local package manager groundwork
 - Gas Station package registry
 - Gas Inspector debugger
 - Air Freshener garbage collector branding

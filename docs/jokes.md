@@ -53,3 +53,10 @@ Keep the language syntax predictable even when the terminology is ridiculous.
 - now() tells you when the explosion happened.
 - type() is the Gas Inspector's way of asking what exactly is in the bag.
 - stringify() makes a value presentable before you let it smell.
+
+## Fart 1.1 — Fart Bag
+
+- Package manager: **Fart Bag**. Because every dependency needs somewhere to live.
+- A local package is installed into `fart_modules`: the gas has been bagged.
+- `fart bag list` answers the most important dependency question: "What is in the bag?"
+- The future public registry is **Gas Station**. First we bag the gas; then we build the station.

@@ -6,8 +6,9 @@ import { Lexer } from "./lexer.js";
 import { Parser } from "./parser.js";
 import { Interpreter } from "./interpreter.js";
 import { formatSource } from "./formatter.js";
+import { bagHelp, initBag, installBag, listBags } from "./bag.js";
 
-export const VERSION = "1.0.0";
+export const VERSION = "1.1.0";
 
 export function parseSource(source) {
   const tokens = new Lexer(source).scanTokens();
@@ -40,6 +41,9 @@ function printHelp() {
   console.log("  fart check <file>   Check syntax without running");
   console.log("  fart fmt <file>     Format a Fart program");
   console.log("  fart fmt --write <file>  Format file in place");
+  console.log("  fart bag init [dir] Create fart.json");
+  console.log("  fart bag install <dir> Install a local Fart package");
+  console.log("  fart bag list       List installed bags");
   console.log("  fart repl           Start the Fart REPL");
   console.log("  fart --version      Show version");
   console.log("  fart --help         Show this help");
@@ -107,6 +111,34 @@ export async function main(args = process.argv.slice(2)) {
       check(fs.readFileSync(file, "utf8"));
       console.log("No stink detected. Syntax is clean.");
       return 0;
+    } catch (error) {
+      console.error(formatError(error));
+      return 1;
+    }
+  }
+  if (args[0] === "bag") {
+    const command = args[1];
+    try {
+      if (!command || command === "--help" || command === "-h") { console.log(bagHelp()); return 0; }
+      if (command === "init") {
+        const manifest = initBag(args[2] ?? process.cwd());
+        console.log("Bag created: " + manifest.name + "@" + manifest.version);
+        return 0;
+      }
+      if (command === "install") {
+        if (!args[2]) { console.error("FART ERROR: bag install needs a package directory."); return 1; }
+        const result = installBag(args[2]);
+        console.log("Bag installed: " + result.manifest.name + "@" + result.manifest.version);
+        return 0;
+      }
+      if (command === "list") {
+        const result = listBags();
+        console.log(result.manifest.name + "@" + result.manifest.version);
+        for (const name of result.names) console.log("  " + name);
+        return 0;
+      }
+      console.error("FART ERROR: Unknown bag command: " + command);
+      return 1;
     } catch (error) {
       console.error(formatError(error));
       return 1;

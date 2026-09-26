@@ -11,7 +11,7 @@ lexer, parser, runtime, standard library, CLI, formatter and test suite.
 
 ## Status
 
-**Stable 1.0.0**
+**Stable 1.1.0**
 
 The language runs on Node.js and uses:
 
@@ -77,10 +77,12 @@ fart main() {
 - REPL and syntax checking
 - formatter
 - line/column diagnostics
-- 34 automated tests
+- Fart Bag local package manager groundwork
+- 37 automated tests
 
 See [SPEC.md](SPEC.md) for the language reference,
-[docs/tutorial.md](docs/tutorial.md) for the beginner tutorial, and
+[docs/tutorial.md](docs/tutorial.md) for the beginner tutorial,
+[docs/bag.md](docs/bag.md) for Fart Bag, and
 [ROADMAP.md](ROADMAP.md) for project history.
 
 ## Project rule
@@ -106,6 +108,8 @@ fart examples/hello.fart
 fart check examples/hello.fart
 fart fmt examples/hello.fart
 fart repl
+fart bag init
+fart bag list
 ```
 
 ### Что уже умеет Fart
