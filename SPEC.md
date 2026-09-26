@@ -1,6 +1,6 @@
 # Fart Language Specification
 
-**Version:** 1.5.0
+**Version:** 1.8.0
 **Status:** Stable
 
 ## 1. Philosophy
@@ -9,7 +9,7 @@ Fart is a small interpreted language whose terminology is intentionally ridiculo
 
 Pipeline:
 
-`source -> Lexer -> Parser -> AST -> Interpreter`
+`source -> Lexer -> Parser -> AST -> Compiler -> bytecode -> Gas Engine VM`
 
 The joke is the presentation. The implementation should be serious.
 

@@ -1,0 +1,18 @@
+import {Op,type Chunk,type FartFunction} from "./compiler.js";
+type Frame={chunk:Chunk;ip:number;base:number;name:string};export type VmOutput=(text:string)=>void;
+export class VirtualMachine{
+ private stack:unknown[]=[];private globals:unknown[]=[];private frames:Frame[]=[];
+ constructor(private output:VmOutput=console.log){}
+ run(c:Chunk){this.frames=[{chunk:c,ip:0,base:0,name:c.name}];while(this.frames.length)this.step();}
+ private step(){const f=this.frames[this.frames.length-1]!;const i=f.chunk.code[f.ip++];if(!i){this.frames.pop();return;}const a=i.operand;switch(i.op){
+ case Op.CONSTANT:this.push(f.chunk.constants[a!]);break;case Op.NULL:this.push(null);break;case Op.TRUE:this.push(true);break;case Op.FALSE:this.push(false);break;case Op.POP:this.pop();break;
+ case Op.GET_GLOBAL:this.push(this.globals[a!]??null);break;case Op.SET_GLOBAL:this.globals[a!]=this.peek();break;case Op.GET_LOCAL:this.push(this.stack[f.base+a!]??null);break;case Op.SET_LOCAL:this.stack[f.base+a!]=this.peek();break;
+ case Op.ADD:this.bin((x,y)=>typeof x==="string"||typeof y==="string"?this.str(x)+this.str(y):(x as number)+(y as number));break;case Op.SUBTRACT:this.bin((x,y)=>(x as number)-(y as number));break;case Op.MULTIPLY:this.bin((x,y)=>(x as number)*(y as number));break;
+ case Op.DIVIDE:{const y=this.pop() as number,x=this.pop() as number;if(y===0)throw Error("FART VM ERROR: division by zero");this.push(x/y);break;}case Op.NEGATE:this.push(-(this.pop() as number));break;case Op.NOT:this.push(!this.truthy(this.pop()));break;
+ case Op.EQUAL:this.bin((x,y)=>x===y);break;case Op.NOT_EQUAL:this.bin((x,y)=>x!==y);break;case Op.GREATER:this.bin((x,y)=>(x as number)>(y as number));break;case Op.GREATER_EQUAL:this.bin((x,y)=>(x as number)>=(y as number));break;case Op.LESS:this.bin((x,y)=>(x as number)<(y as number));break;case Op.LESS_EQUAL:this.bin((x,y)=>(x as number)<=(y as number));break;
+ case Op.JUMP:f.ip=a!;break;case Op.JUMP_IF_FALSE:if(!this.truthy(this.pop()))f.ip=a!;break;case Op.LOOP:f.ip=a!;break;case Op.ARRAY:{const n=a!;this.push(this.stack.splice(this.stack.length-n,n));break;}
+ case Op.INDEX:{const k=this.pop() as number,o=this.pop() as unknown[];this.push(o[k]??null);break;}case Op.SET_INDEX:{const v=this.pop(),k=this.pop() as number,o=this.pop() as unknown[];o[k]=v;this.push(v);break;}
+ case Op.SMELL:{const n=a!,v=this.stack.splice(this.stack.length-n,n);this.output(v.map(x=>this.str(x)).join(" "));this.push(null);break;}case Op.CALL:this.call(a!);break;case Op.RETURN:{const v=this.pop(),d=this.frames.pop()!;this.stack.length=d.base;if(this.frames.length)this.push(v);break;}default:throw Error("FART VM ERROR: unknown opcode");}}
+ private call(n:number){const ci=this.stack.length-n-1,fn=this.stack[ci] as FartFunction;if(!fn?.chunk)throw Error("FART VM ERROR: value is not callable");if(fn.arity!==n)throw Error(`FART VM ERROR: expected ${fn.arity} arguments but got ${n}`);this.stack.splice(ci,1);this.frames.push({chunk:fn.chunk,ip:0,base:ci,name:fn.name});}
+ private bin(fn:(a:unknown,b:unknown)=>unknown){const b=this.pop(),a=this.pop();this.push(fn(a,b));}private push(v:unknown){this.stack.push(v);}private pop(){if(!this.stack.length)throw Error("FART VM ERROR: stack underflow");return this.stack.pop();}private peek(){return this.stack[this.stack.length-1];}private truthy(v:unknown){return v!==false&&v!==null;}private str(v:unknown):string{return v===null?"null":typeof v==="boolean"?(v?"true":"false"):Array.isArray(v)?"["+v.map(x=>this.str(x)).join(", ")+"]":String(v);}
+}

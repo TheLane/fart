@@ -19,6 +19,7 @@
 - [x] Phase 14 — TypeScript strict hardening (Fart 1.5)
 - [x] Phase 15 — FAT/FATTER application bundles (Fart 1.6)
 - [x] Phase 16 — Self-contained FATTER runtime snapshots (Fart 1.7)
+- [x] Phase 17 — Experimental bytecode compiler and Gas Engine VM (Fart 1.8)
 
 ## Fart 1.0
 
@@ -49,6 +50,8 @@ Possible future projects:
 - web playground
 - WASM target
 - Fart written in Fart
+- VM optimization and profiling
+- VM as the default runtime after semantic parity is complete
 
 ## Guiding rule
 

@@ -10,8 +10,10 @@ import { bagHelp, initBag, installBag, listBags } from "./bag.js";
 import { publishBag, searchBags, installRemoteBag, startStation } from "./station.js";
 import { GasInspector } from "./debugger.js";
 import { buildFat, fatHelp, runFat } from "./fat.js";
+import { Compiler } from "./compiler.js";
+import { VirtualMachine } from "./vm.js";
 
-export const VERSION = "1.7.0";
+export const VERSION = "1.8.0";
 export const DEFAULT_STATION = "http://127.0.0.1:4873";
 
 export function parseSource(source: string) {
@@ -52,6 +54,7 @@ function printHelp(): void {
   console.log("  fart bag list                  List installed bags");
   console.log("  fart station [port]            Start a local Gas Station");
   console.log("  fart inspect <file> [--break N] Debug with Gas Inspector");
+  console.log("  fart vm <file>                 Run with the experimental Gas Engine VM");
   console.log("  fart build [--fat|--fatter] [dir] Build a FAT/FATTER bundle");
   console.log("  fart run <file.fat|file.fatter> Run a FAT bundle");
   console.log("  fart repl                      Start the Fart REPL");
@@ -140,6 +143,12 @@ export async function main(args = process.argv.slice(2)): Promise<number> {
   if (args.length === 0 || args[0] === "--help" || args[0] === "-h") { printHelp(); return 0; }
   if (args[0] === "--version" || args[0] === "-v") { console.log(VERSION); return 0; }
   if (args[0] === "repl") { await repl(); return 0; }
+  if (args[0] === "vm") {
+    const file=args[1];
+    if(!file){console.error("FART ERROR: vm needs a .fart file.");return 1;}
+    if(!fs.existsSync(file)){console.error("FART ERROR: File not found: "+file);return 1;}
+    try{const program=parseSource(fs.readFileSync(file,"utf8")),chunk=new Compiler().compile(program);new VirtualMachine(console.log).run(chunk);return 0;}catch(error){console.error(formatError(error));return 1;}
+  }
   if (args[0] === "inspect") {
     const file=args[1];
     if(!file){console.error("FART ERROR: inspect needs a .fart file.");return 1;}

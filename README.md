@@ -11,11 +11,13 @@ lexer, parser, runtime, standard library, CLI, formatter and test suite.
 
 ## Status
 
-**Stable 1.7.0**
+**Stable 1.8.0**
 
 The implementation is written in TypeScript and runs on Node.js. The language uses:
 
-`source -> lexer -> parser -> AST -> interpreter`
+`source -> lexer -> parser -> AST -> compiler -> bytecode -> Gas Engine VM`
+
+The original tree-walk interpreter remains available internally as a reference runtime; the new VM is currently experimental.
 
 The joke is the presentation. The implementation is serious.
 
@@ -83,11 +85,12 @@ fart main() {
 - TypeScript implementation
 - FAT/FATTER application bundles
 - Gas Station and Gas Inspector tooling
-- 44 automated tests
+- experimental bytecode compiler and Gas Engine VM
+- 47 automated tests
 
 See [SPEC.md](SPEC.md) for the language reference,
 [docs/tutorial.md](docs/tutorial.md) for the beginner tutorial,
-[docs/bag.md](docs/bag.md), [docs/gas-station.md](docs/gas-station.md), [docs/gas-inspector.md](docs/gas-inspector.md), and [docs/fat.md](docs/fat.md) for Fart Bag, Gas Station, and Gas Inspector, and
+[docs/bag.md](docs/bag.md), [docs/gas-station.md](docs/gas-station.md), [docs/gas-inspector.md](docs/gas-inspector.md), [docs/gas-engine.md](docs/gas-engine.md), and [docs/fat.md](docs/fat.md) for Fart Bag, Gas Station, Gas Inspector, and the VM, and
 [ROADMAP.md](ROADMAP.md) for project history.
 
 ## Project rule
@@ -98,11 +101,11 @@ See [SPEC.md](SPEC.md) for the language reference,
 
 > Fart — настоящий язык программирования, который воняет, но работает.
 
-Fart — экспериментальный шуточный язык программирования с настоящим лексером, парсером, AST, интерпретатором, стандартной библиотекой, REPL, форматтером и тестами.
+Fart — экспериментальный шуточный язык программирования с настоящим лексером, парсером, AST, интерпретатором, bytecode compiler, Gas Engine VM, стандартной библиотекой, REPL, форматтером и тестами.
 
-Проект написан на Node.js. Архитектура:
+Проект написан на TypeScript и работает на Node.js. Основной interpreter сохранён как эталонный runtime, а VM пока экспериментальная:
 
-`исходный код -> lexer -> parser -> AST -> interpreter`
+`исходный код -> lexer -> parser -> AST -> compiler -> bytecode -> Gas Engine VM`
 
 ### Быстрый старт
 
@@ -117,6 +120,7 @@ fart bag init
 fart bag list
 fart station
 fart inspect examples/hello.fart
+fart vm examples/hello.fart
 fart build --fat
 fart build --fatter
 fart run build/my-fart.fat
@@ -138,12 +142,13 @@ fart run build/my-fart.fat
 - Gas Station и удалённая установка пакетов
 - Gas Inspector для пошаговой отладки
 - FAT/FATTER для упаковки приложений
+- экспериментальный bytecode compiler и Gas Engine VM
 
 Документация: [SPEC.md](SPEC.md), [учебник](docs/tutorial.md), [ROADMAP.md](ROADMAP.md).
 
 **Шутка — в подаче. Реализация — всерьёз.**
 
-Текущая версия: **1.7.0**.
+Текущая версия: **1.8.0**.
 
 ### Репозиторий
 
