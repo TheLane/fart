@@ -293,6 +293,13 @@ this documented behavior or use normal Semantic Versioning when compatibility ch
 - Full test suite: 37/37.
 
 
+## 2026-09-27 — v1.4.1 — documentation encoding and Gas Inspector docs
+
+- Repaired corrupted Russian text in README and project history.
+- Verified project text files as UTF-8.
+- Added dedicated Gas Inspector documentation.
+- Updated SPEC and ROADMAP to reflect Fart 1.4.
+
 ## 2026-09-27 — v1.4.0 — Gas Inspector
 
 ### Что сделано
