@@ -11,7 +11,7 @@ lexer, parser, runtime, standard library, CLI, formatter and test suite.
 
 ## Status
 
-**Stable 1.5.0**
+**Stable 1.6.0**
 
 The implementation is written in TypeScript and runs on Node.js. The language uses:
 
@@ -81,11 +81,13 @@ fart main() {
 - Gas Station package registry
 - Gas Inspector debugger
 - TypeScript implementation
-- 40 automated tests
+- FAT/FATTER application bundles
+- Gas Station and Gas Inspector tooling
+- 44 automated tests
 
 See [SPEC.md](SPEC.md) for the language reference,
 [docs/tutorial.md](docs/tutorial.md) for the beginner tutorial,
-[docs/bag.md](docs/bag.md), [docs/gas-station.md](docs/gas-station.md), and [docs/gas-inspector.md](docs/gas-inspector.md) for Fart Bag, Gas Station, and Gas Inspector, and
+[docs/bag.md](docs/bag.md), [docs/gas-station.md](docs/gas-station.md), [docs/gas-inspector.md](docs/gas-inspector.md), and [docs/fat.md](docs/fat.md) for Fart Bag, Gas Station, and Gas Inspector, and
 [ROADMAP.md](ROADMAP.md) for project history.
 
 ## Project rule
@@ -115,6 +117,9 @@ fart bag init
 fart bag list
 fart station
 fart inspect examples/hello.fart
+fart build --fat
+fart build --fatter
+fart run build/my-fart.fat
 ```
 
 ### Что уже умеет Fart
@@ -132,12 +137,13 @@ fart inspect examples/hello.fart
 - автоматические тесты
 - Gas Station и удалённая установка пакетов
 - Gas Inspector для пошаговой отладки
+- FAT/FATTER для упаковки приложений
 
 Документация: [SPEC.md](SPEC.md), [учебник](docs/tutorial.md), [ROADMAP.md](ROADMAP.md).
 
 **Шутка — в подаче. Реализация — всерьёз.**
 
-Текущая версия: **1.5.0**.
+Текущая версия: **1.6.0**.
 
 ### Репозиторий
 

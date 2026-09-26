@@ -9,8 +9,9 @@ import { formatSource } from "./formatter.js";
 import { bagHelp, initBag, installBag, listBags } from "./bag.js";
 import { publishBag, searchBags, installRemoteBag, startStation } from "./station.js";
 import { GasInspector } from "./debugger.js";
+import { buildFat, fatHelp, runFat } from "./fat.js";
 
-export const VERSION = "1.5.0";
+export const VERSION = "1.6.0";
 export const DEFAULT_STATION = "http://127.0.0.1:4873";
 
 export function parseSource(source: string) {
@@ -51,9 +52,13 @@ function printHelp(): void {
   console.log("  fart bag list                  List installed bags");
   console.log("  fart station [port]            Start a local Gas Station");
   console.log("  fart inspect <file> [--break N] Debug with Gas Inspector");
+  console.log("  fart build [--fat|--fatter] [dir] Build a FAT/FATTER bundle");
+  console.log("  fart run <file.fat|file.fatter> Run a FAT bundle");
   console.log("  fart repl                      Start the Fart REPL");
   console.log("  fart --version                 Show version");
   console.log("  fart --help                    Show this help");
+  console.log("");
+  console.log(fatHelp());
   console.log("");
   console.log("Environment:");
   console.log("  FART_STATION_URL               Gas Station URL (default: " + DEFAULT_STATION + ")");
@@ -142,6 +147,26 @@ export async function main(args = process.argv.slice(2)): Promise<number> {
     const breaks=[];
     for(let i=2;i<args.length;i++)if(args[i]==="--break"||args[i]==="-b"){const n=Number(args[++i]);if(Number.isInteger(n)&&n>0)breaks.push(n);}
     try{const source=fs.readFileSync(file,"utf8"),program=parseSource(source),interpreter=new Interpreter(),inspector=new GasInspector(source,breaks);inspector.start(interpreter);interpreter.interpret(program);interpreter.runMain();return 0;}catch(error){console.error(formatError(error));return 1;}
+  }
+  if (args[0] === "build") {
+    let kind = "fat";
+    let dir = process.cwd();
+    for (const arg of args.slice(1)) {
+      if (arg === "--fat") kind = "fat";
+      else if (arg === "--fatter") kind = "fatter";
+      else dir = arg;
+    }
+    try {
+      const output = buildFat(dir, kind as "fat" | "fatter");
+      console.log((kind === "fatter" ? "FATTER FART ready: " : "FAT FART ready: ") + output);
+      return 0;
+    } catch (error) { console.error(formatError(error)); return 1; }
+  }
+  if (args[0] === "run") {
+    const file = args[1];
+    if (!file) { console.error("FART ERROR: run needs a .fat or .fatter file."); return 1; }
+    try { runFat(file); return 0; }
+    catch (error) { console.error(formatError(error)); return 1; }
   }
   if (args[0] === "station") {
     const port = Number(args[1] ?? 4873);
