@@ -202,3 +202,16 @@ The v0.5.0 interpreter files were also cleaned up so AST definitions live only i
 Added mutable arrays with literal syntax (`[1, 2, 3]`), zero-based indexing, element assignment, nested arrays and the `length()` built-in for arrays and strings. Added bounds/type checks and five array tests. Full suite: 20/20 passing.
 
 Also introduced a living example gallery in `examples/` and `docs/jokes.md` for the project's terminology and recurring jokes.
+
+
+## 2026-09-26 — v0.8.0 — standard library
+
+- Extracted built-in functions into `src/stdlib.js`.
+- Added numeric helpers: `abs`, `floor`, `ceil`, `round`, `sqrt`.
+- Added string helpers: `upper`, `lower`, `trim`, `contains`.
+- Added utility helpers: `random`, `now`, `type`, `stringify`.
+- Kept conventional names in source code; Fart humor remains in the presentation and documentation.
+- Added `examples/stdlib.fart` as an executable standard-library example.
+- Added five standard-library tests.
+- Full test suite: 25/25 passing.
+- The joke remains the presentation; the implementation remains serious.

@@ -40,3 +40,16 @@ This file is intentionally part of the project. As the language grows, add new j
 The joke is the presentation. The implementation should be serious.
 
 Keep the language syntax predictable even when the terminology is ridiculous.
+
+
+## Standard library
+
+- The standard library is the Air Freshener Kit: tools for keeping the language useful without pretending the smell is gone.
+- upper() and lower() change the smell's capitalization, not its chemical composition.
+- trim() removes the whitespace around a fart. Good hygiene matters.
+- contains() answers the important question: is there actually gas in this bag?
+- sqrt() calculates how much square-rooted pressure remains in the chamber.
+- random() is the official source of unpredictable gas.
+- now() tells you when the explosion happened.
+- type() is the Gas Inspector's way of asking what exactly is in the bag.
+- stringify() makes a value presentable before you let it smell.

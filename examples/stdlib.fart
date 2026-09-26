@@ -1,0 +1,15 @@
+// The Fart standard library: useful tools for controlling the gas.
+
+fart main() {
+    let raw = "   VERY SMELLY   ";
+    smell(upper(trim(raw)));
+
+    let pressure = -12.7;
+    smell("Pressure:", abs(pressure));
+    smell("Rounded:", round(pressure));
+    smell("Square root:", sqrt(81));
+
+    smell("Contains gas:", contains("gas bag", "gas"));
+    smell("Type:", type([1, 2, 3]));
+    smell("Bag:", stringify([1, "medium", true]));
+}
