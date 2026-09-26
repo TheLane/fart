@@ -1,14 +1,14 @@
 ﻿import { Lexer } from "./lexer.js";
-import { TokenType } from "./token.js";
+import { TokenType, type TokenTypeValue } from "./token.js";
 
-const binaryOperators = new Set([
+const binaryOperators: Set<TokenTypeValue> = new Set([
   TokenType.PLUS, TokenType.MINUS, TokenType.STAR, TokenType.SLASH,
   TokenType.EQUAL, TokenType.EQUAL_EQUAL, TokenType.BANG_EQUAL,
   TokenType.GREATER, TokenType.GREATER_EQUAL, TokenType.LESS, TokenType.LESS_EQUAL,
   TokenType.AND_AND, TokenType.OR_OR
 ]);
 
-const wordLike = new Set([
+const wordLike: Set<TokenTypeValue> = new Set([
   TokenType.IDENTIFIER, TokenType.NUMBER, TokenType.STRING,
   TokenType.FART, TokenType.LET, TokenType.IF, TokenType.ELSE,
   TokenType.WHILE, TokenType.RELEASE, TokenType.TRUE, TokenType.FALSE, TokenType.NULL

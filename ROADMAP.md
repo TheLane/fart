@@ -13,6 +13,7 @@
 - [x] Phase 8 — Standard library
 - [x] Phase 9 — Stable MVP
 - [x] Phase 10 — Fart 1.0
+- [x] Phase 11 — TypeScript migration (Fart 1.2)
 
 ## Fart 1.0
 

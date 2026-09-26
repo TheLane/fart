@@ -1,9 +1,9 @@
-﻿import test from "node:test";
+import test from "node:test";
 import assert from "node:assert/strict";
-import { Interpreter } from "../src/interpreter.js";
-import { Lexer } from "../src/lexer.js";
-import { Parser } from "../src/parser.js";
-import { execute, check } from "../src/cli.js";
+import { Interpreter } from "../dist/interpreter.js";
+import { Lexer } from "../dist/lexer.js";
+import { Parser } from "../dist/parser.js";
+import { execute, check } from "../dist/cli.js";
 
 function run(source) {
   const output = [];
@@ -42,4 +42,3 @@ test("division by zero is a runtime error", () => {
 test("wrong function arity is a runtime error", () => {
   assert.throws(() => execute("fart main() { fart add(a) { release a; } release add(); }"), /Expected 1 arguments but got 0/);
 });
-

@@ -1,12 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { Lexer } from "../src/lexer.js";
-import { Parser, ParserError } from "../src/parser.js";
-import { TokenType } from "../src/token.js";
+import { Lexer } from "../dist/lexer.js";
+import { Parser, ParserError } from "../dist/parser.js";
+import { TokenType } from "../dist/token.js";
 import {
   Program, FunctionDeclaration, VariableDeclaration, IfStatement,
   WhileStatement, ReleaseStatement, Binary, Call, Variable, Literal
-} from "../src/ast.js";
+} from "../dist/ast.js";
 
 function parse(source) {
   const tokens = new Lexer(source).scanTokens();

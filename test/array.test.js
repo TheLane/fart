@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { Lexer } from "../src/lexer.js";
-import { Parser } from "../src/parser.js";
-import { Interpreter } from "../src/interpreter.js";
+import { Lexer } from "../dist/lexer.js";
+import { Parser } from "../dist/parser.js";
+import { Interpreter } from "../dist/interpreter.js";
 function run(source){const output=[];const program=new Parser(new Lexer(source).scanTokens()).parse();const interpreter=new Interpreter(v=>output.push(v));interpreter.interpret(program);return {output,result:interpreter.runMain()};}
 test("creates and indexes arrays",()=>{const {output}=run(`fart main(){let gas=[10,20,30];smell(gas[1]);release gas[2];}`);assert.deepEqual(output,["20"]);});
 test("assigns array elements",()=>{const {result}=run(`fart main(){let gas=[1,2,3];gas[1]=42;release gas[1];}`);assert.equal(result,42);});

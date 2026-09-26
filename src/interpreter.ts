@@ -4,6 +4,9 @@ import { Environment, RuntimeError, ReturnSignal, FartFunction } from "./runtime
 import { installStdlib } from "./stdlib.js";
 
 export class Interpreter {
+  output: (...values: string[]) => void;
+  globals: Environment;
+  environment: Environment;
   constructor(output = console.log) {
     this.output = output;
     this.globals = new Environment();

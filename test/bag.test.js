@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { initBag, installBag, listBags, readManifest } from "../src/bag.js";
+import { initBag, installBag, listBags, readManifest } from "../dist/bag.js";
 
 function tempDir(prefix) { return fs.mkdtempSync(path.join(os.tmpdir(), prefix)); }
 

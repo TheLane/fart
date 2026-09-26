@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { Lexer } from "../src/lexer.js";
-import { Parser } from "../src/parser.js";
-import { Interpreter } from "../src/interpreter.js";
+import { Lexer } from "../dist/lexer.js";
+import { Parser } from "../dist/parser.js";
+import { Interpreter } from "../dist/interpreter.js";
 
 function run(source) {
   const output = [];

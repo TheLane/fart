@@ -8,7 +8,7 @@ import { Interpreter } from "./interpreter.js";
 import { formatSource } from "./formatter.js";
 import { bagHelp, initBag, installBag, listBags } from "./bag.js";
 
-export const VERSION = "1.1.0";
+export const VERSION = "1.2.0";
 
 export function parseSource(source) {
   const tokens = new Lexer(source).scanTokens();
@@ -172,3 +172,4 @@ export async function main(args = process.argv.slice(2)) {
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   process.exitCode = await main();
 }
+

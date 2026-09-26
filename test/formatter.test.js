@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { formatSource } from "../src/formatter.js";
+import { formatSource } from "../dist/formatter.js";
 
 test("formats a compact program", () => {
   const source = "fart main(){let gas=1+2;if(gas>1){smell(gas);}}";

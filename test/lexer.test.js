@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { Lexer, LexerError } from '../src/lexer.js';
-import { TokenType } from '../src/token.js';
+import { Lexer, LexerError } from '../dist/lexer.js';
+import { TokenType } from '../dist/token.js';
 
 const types = source => new Lexer(source).scanTokens().map(token => token.type);
 

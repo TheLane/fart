@@ -271,7 +271,15 @@ v0.9.0 СЃС‚Р°РЅРѕРІРёС‚СЃСЏ СЃС‚Р°Р±РёР»СЊ�
 Fart 1.0.0 is the stable language baseline. Future changes should preserve
 this documented behavior or use normal Semantic Versioning when compatibility changes.
 
-## 2026-09-26 — v1.1.0 — Fart Bag groundwork
+## 2026-09-26 — v1.2.0 — миграция реализации на TypeScript
+
+- `src/*.js` заменены на TypeScript.
+- Добавлены типизированные Token, AST и runtime boundaries.
+- Сборка теперь идёт через `tsc` в `dist/`.
+- CLI и тесты переведены на собранный runtime.
+- Все 37 тестов сохранены и проходят.
+
+2026-09-26 — v1.1.0 — Fart Bag groundwork
 
 - Repository made public on GitHub.
 - README expanded with English/Russian presentation and direct repository links.
