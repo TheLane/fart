@@ -191,8 +191,14 @@ npm.cmd test:
 
 v0.4.0 â€” Interpreter.
 
-## 2026-09-26 — v0.6.0 — functions and scopes
+## 2026-09-26 ï¿½ v0.6.0 ï¿½ functions and scopes
 
 Completed the function/runtime phase. Fart now has function calls with parameters, return values through `release`, nested lexical scopes, closures and argument-count validation. Added dedicated interpreter tests; full suite: 15/15 passing.
 
 The v0.5.0 interpreter files were also cleaned up so AST definitions live only in `src/ast.js`, runtime support in `src/runtime.js`, and execution in `src/interpreter.js`.
+
+## 2026-09-26 ï¿½ v0.7.0 ï¿½ arrays
+
+Added mutable arrays with literal syntax (`[1, 2, 3]`), zero-based indexing, element assignment, nested arrays and the `length()` built-in for arrays and strings. Added bounds/type checks and five array tests. Full suite: 20/20 passing.
+
+Also introduced a living example gallery in `examples/` and `docs/jokes.md` for the project's terminology and recurring jokes.

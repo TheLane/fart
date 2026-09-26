@@ -42,7 +42,7 @@ export class Lexer {
     const c = this.advance();
     const single = {
       '(': TokenType.LEFT_PAREN, ')': TokenType.RIGHT_PAREN,
-      '{': TokenType.LEFT_BRACE, '}': TokenType.RIGHT_BRACE,
+      '{': TokenType.LEFT_BRACE, '}': TokenType.RIGHT_BRACE, '[': TokenType.LEFT_BRACKET, ']': TokenType.RIGHT_BRACKET,
       ',': TokenType.COMMA, '.': TokenType.DOT, ';': TokenType.SEMICOLON,
       '-': TokenType.MINUS, '+': TokenType.PLUS, '*': TokenType.STAR
     };

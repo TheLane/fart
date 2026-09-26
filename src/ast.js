@@ -12,3 +12,6 @@ export class Unary { constructor(operator, right) { this.operator=operator; this
 export class Literal { constructor(value) { this.value=value; } }
 export class Variable { constructor(name) { this.name=name; } }
 export class Call { constructor(callee, args) { this.callee=callee; this.args=args; } }
+export class ArrayLiteral { constructor(elements) { this.elements=elements; } }
+export class Index { constructor(object, index) { this.object=object; this.index=index; } }
+export class IndexAssignment { constructor(object, index, value) { this.object=object; this.index=index; this.value=value; } }

@@ -1,0 +1,10 @@
+fart main() {
+    let gas = ["small", "medium", "large"];
+
+    smell("Gas bag:", gas);
+    smell("Second puff:", gas[1]);
+
+    gas[1] = "VERY MEDIUM";
+    smell("After pressure adjustment:", gas);
+    smell("Bag capacity:", length(gas));
+}

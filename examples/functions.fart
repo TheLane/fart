@@ -1,0 +1,12 @@
+fart makeAdder(x) {
+    fart add(y) {
+        release x + y;
+    }
+    release add;
+}
+
+fart main() {
+    let add10 = makeAdder(10);
+    smell("The calculator has been contaminated.");
+    smell(add10(32));
+}

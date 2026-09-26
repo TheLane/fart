@@ -1,5 +1,5 @@
 import { TokenType } from "./token.js";
-import { FunctionDeclaration, VariableDeclaration, Block, IfStatement, WhileStatement, ReleaseStatement, ExpressionStatement, Assignment, Binary, Unary, Literal, Variable, Call } from "./ast.js";
+import { FunctionDeclaration, VariableDeclaration, Block, IfStatement, WhileStatement, ReleaseStatement, ExpressionStatement, Assignment, Binary, Unary, Literal, Variable, Call, ArrayLiteral, Index, IndexAssignment } from "./ast.js";
 import { Environment, RuntimeError, ReturnSignal, FartFunction } from "./runtime.js";
 
 export class Interpreter {
@@ -8,6 +8,7 @@ export class Interpreter {
     this.globals = new Environment();
     this.environment = this.globals;
     this.globals.define("smell", (...values) => { this.output(values.map(v => this.stringify(v)).join(" ")); return null; });
+    this.globals.define("length", value => { if (!Array.isArray(value) && typeof value !== "string") throw new RuntimeError("length needs an array or string."); return value.length; });
   }
   interpret(program) {
     try { for (const statement of program.statements) this.execute(statement); }
@@ -31,6 +32,9 @@ export class Interpreter {
   executeBlock(statements, environment) { const previous = this.environment; try { this.environment = environment; for (const statement of statements) this.execute(statement); } finally { this.environment = previous; } }
   evaluate(node) {
     if (node instanceof Literal) return node.value;
+    if (node instanceof ArrayLiteral) return node.elements.map(element => this.evaluate(element));
+    if (node instanceof Index) { const object=this.evaluate(node.object); const index=this.evaluate(node.index); return this.readIndex(object,index,node); }
+    if (node instanceof IndexAssignment) { const object=this.evaluate(node.object); const index=this.evaluate(node.index); const value=this.evaluate(node.value); this.writeIndex(object,index,value,node); return value; }
     if (node instanceof Variable) { try { return this.environment.get(node.name); } catch { throw new RuntimeError("Undefined variable '" + node.name + "'.", node); } }
     if (node instanceof Assignment) { const value = this.evaluate(node.value); try { this.environment.assign(node.name, value); } catch { throw new RuntimeError("Undefined variable '" + node.name + "'.", node); } return value; }
     if (node instanceof Unary) { const right = this.evaluate(node.right); if (node.operator === TokenType.MINUS) { this.requireNumber(right,node); return -right; } if (node.operator === TokenType.BANG) return !this.isTruthy(right); }
@@ -54,5 +58,7 @@ export class Interpreter {
   compare(a,b,node,op){if(typeof a!=="number"||typeof b!=="number")throw new RuntimeError("Operands must be numbers.",node);return op(a,b);}
   requireNumber(v,node){if(typeof v!=="number")throw new RuntimeError("Operand must be a number.",node);}
   callValue(callee,args,node){if(callee instanceof FartFunction){if(args.length!==callee.arity())throw new RuntimeError("Expected "+callee.arity()+" arguments but got "+args.length+".",node);return callee.call(args);}if(typeof callee==="function")return Reflect.apply(callee,null,args);throw new RuntimeError("Can only call a fart or a built-in function.",node);}
-  isTruthy(v){return v!==null&&v!==false;} isEqual(a,b){return a===b;} stringify(v){if(v===null)return "null";if(v===true)return "true";if(v===false)return "false";return String(v);}
+  isTruthy(v){return v!==null&&v!==false;} isEqual(a,b){return a===b;} readIndex(object,index,node){if(!Array.isArray(object)&&typeof object!=="string")throw new RuntimeError("Can only index an array or string.",node);if(!Number.isInteger(index))throw new RuntimeError("Array index must be an integer.",node);if(index<0||index>=object.length)throw new RuntimeError("Array index out of bounds.",node);return object[index];}
+  writeIndex(object,index,value,node){if(!Array.isArray(object))throw new RuntimeError("Can only assign an array element.",node);if(!Number.isInteger(index))throw new RuntimeError("Array index must be an integer.",node);if(index<0||index>=object.length)throw new RuntimeError("Array index out of bounds.",node);object[index]=value;}
+  stringify(v){if(v===null)return "null";if(v===true)return "true";if(v===false)return "false";if(Array.isArray(v))return "["+v.map(x=>this.stringify(x)).join(", ")+"]";return String(v);}
 }
