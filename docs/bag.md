@@ -1,9 +1,7 @@
 # Fart Bag
 
-Fart Bag is the package-management foundation introduced in Fart 1.1.0.
-The first version deliberately keeps the registry out of the picture: packages are
-installed from local directories so the package format can stabilize before the
-Gas Station registry arrives.
+Fart Bag is the package-management foundation introduced in Fart 1.1.0. Fart 1.3.0 adds the first Gas Station registry and network package workflow.
+Local installation remains supported, while the new Gas Station workflow adds network publishing, search, and installation.
 
 ## Package manifest
 

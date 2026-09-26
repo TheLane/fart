@@ -1,39 +1,39 @@
 {
-    "name":  "fart-language",
-    "version":  "1.2.0",
-    "description":  "Fart — a real programming language that stinks, but runs.",
-    "keywords":  [
-                     "fart",
-                     "programming-language",
-                     "interpreter",
-                     "esolang",
-                     "nodejs",
-                     "javascript",
-                     "compiler"
-                 ],
-    "homepage":  "https://github.com/TheLane/fart#readme",
-    "repository":  {
-                       "type":  "git",
-                       "url":  "https://github.com/TheLane/fart.git"
-                   },
-    "bugs":  {
-                 "url":  "https://github.com/TheLane/fart/issues"
-             },
-    "type":  "module",
-    "private":  true,
-    "bin":  {
-                "fart":  "dist/cli.js"
-            },
-    "scripts":  {
-                    "test:lexer":  "npm run build \u0026\u0026 node --test test/lexer.test.js",
-                    "build":  "tsc",
-                    "test":  "npm run build \u0026\u0026 node --test"
-                },
-    "engines":  {
-                    "node":  "\u003e=20"
-                },
-    "devDependencies":  {
-                            "@types/node":  "^24.0.0",
-                            "typescript":  "^5.9.2"
-                        }
+  "name": "fart-language",
+  "version": "1.3.0",
+  "description": "Fart — a real programming language that stinks, but runs.",
+  "keywords": [
+    "fart",
+    "programming-language",
+    "interpreter",
+    "esolang",
+    "nodejs",
+    "javascript",
+    "compiler"
+  ],
+  "homepage": "https://github.com/TheLane/fart#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheLane/fart.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TheLane/fart/issues"
+  },
+  "type": "module",
+  "private": true,
+  "bin": {
+    "fart": "dist/cli.js"
+  },
+  "scripts": {
+    "test:lexer": "npm run build && node --test test/lexer.test.js",
+    "build": "tsc",
+    "test": "npm run build && node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.2"
+  }
 }

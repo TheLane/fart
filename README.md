@@ -11,7 +11,7 @@ lexer, parser, runtime, standard library, CLI, formatter and test suite.
 
 ## Status
 
-**Stable 1.2.0**
+**Stable 1.3.0**
 
 The implementation is written in TypeScript and runs on Node.js. The language uses:
 
@@ -82,7 +82,7 @@ fart main() {
 
 See [SPEC.md](SPEC.md) for the language reference,
 [docs/tutorial.md](docs/tutorial.md) for the beginner tutorial,
-[docs/bag.md](docs/bag.md) for Fart Bag, and
+[docs/bag.md and docs/gas-station.md](docs/bag.md) for Fart Bag, and
 [ROADMAP.md](ROADMAP.md) for project history.
 
 ## Project rule

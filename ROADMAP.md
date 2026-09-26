@@ -14,6 +14,7 @@
 - [x] Phase 9 — Stable MVP
 - [x] Phase 10 — Fart 1.0
 - [x] Phase 11 — TypeScript migration (Fart 1.2)
+- [x] Phase 12 — Gas Station registry (Fart 1.3)
 
 ## Fart 1.0
 
