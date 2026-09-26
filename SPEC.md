@@ -1,31 +1,23 @@
 # Fart Language Specification
 
-**Version:** 0.9.0  
-**Status:** Stable MVP
+**Version:** 1.0.0  
+**Status:** Stable
 
 ## 1. Philosophy
 
-Fart is a small interpreted language whose terminology is intentionally
-ridiculous while its implementation remains conventional.
+Fart is a small interpreted language whose terminology is intentionally ridiculous while its implementation remains conventional.
 
-The implementation pipeline is:
+Pipeline:
 
 `source -> Lexer -> Parser -> AST -> Interpreter`
 
-User-facing terminology is humorous, but internal implementation terms such as
-Lexer, Parser, AST, Environment and Interpreter remain standard.
+The joke is the presentation. The implementation should be serious.
 
 ## 2. Source files
 
-Fart source files use the `.fart` extension.
-
-Comments begin with `//` and continue to the end of the line.
-
-Statements and declarations end with a semicolon where the grammar specifies one.
+Fart source files use the `.fart` extension. Comments begin with `//` and continue to the end of the line. Statements requiring termination use semicolons.
 
 ## 3. Types
-
-The MVP supports:
 
 - Number
 - String
@@ -34,9 +26,7 @@ The MVP supports:
 - Function
 - Array
 
-Numbers are JavaScript-style floating-point numbers.
-
-Arrays are mutable and zero-indexed.
+Numbers are floating-point values. Arrays are mutable and zero-indexed.
 
 Truthiness: `false` and `null` are false; every other value is true.
 
@@ -49,9 +39,8 @@ gas = gas + 1;
 ```
 
 A declaration without an initializer receives `null`.
-## 5. Functions
 
-Functions are declared with the `fart` keyword.
+## 5. Functions and scopes
 
 ```fart
 fart add(a, b) {
@@ -59,13 +48,7 @@ fart add(a, b) {
 }
 ```
 
-Functions may be assigned to variables and passed as values.
-
-A function without `release` returns `null`.
-
-`release;` is valid and also returns `null`.
-
-Functions use lexical scoping and can form closures.
+Functions support parameters, calls, first-class values, lexical scopes and closures. A function without `release` returns `null`. `release;` is valid and returns `null`.
 
 ## 6. Conditions and loops
 
@@ -83,17 +66,13 @@ while (gas < 100) {
 
 ## 7. Arrays
 
-Array literals use square brackets:
-
 ```fart
 let bag = [10, 20, 30];
 smell(bag[1]);
 bag[1] = 99;
 ```
 
-Indexes must be integers and remain within bounds.
-
-Nested arrays are supported.
+Indexes must be integers and remain within bounds. Nested arrays are supported.
 
 ## 8. Operators
 
@@ -105,16 +84,14 @@ Equality: `== !=`
 
 Logical: `&& || !`
 
-Arithmetic and comparison operands must have compatible numeric types.
-The `+` operator accepts two numbers or two strings.
+The `+` operator accepts two numbers or two strings. Other arithmetic and comparison operators require numbers. Logical operators short-circuit.
 
-Logical operators short-circuit.
 ## 9. Built-ins and standard library
 
-Core built-ins:
+Core:
 
 - `smell(...values)` — output values
-- `length(value)` — length of an array or string
+- `length(value)` — array or string length
 
 Standard library:
 
@@ -124,59 +101,50 @@ Standard library:
 
 ## 10. Program entry point
 
-A source file executed with the CLI is expected to define:
+A file run by the CLI must define `main()`:
 
 ```fart
 fart main() {
-    // program
+    smell("Hello!");
 }
 ```
 
-The CLI executes `main()` after the source has been interpreted.
+The interpreter executes `main()` after loading the file.
 
-The REPL does not require a `main` function and keeps one interpreter
-environment across inputs.
+The REPL does not require `main` and keeps one interpreter environment between inputs.
 
 ## 11. CLI
 
 ```text
 fart <file.fart>
 fart check <file.fart>
+fart fmt <file.fart>
+fart fmt --write <file.fart>
 fart repl
 fart --version
 fart --help
 ```
 
-`fart check` performs lexical and syntactic analysis without executing code.
+`check` performs lexical and syntactic analysis without executing code.
 
-Successful checking prints:
+`fmt` prints formatted source. `fmt --write` formats the file in place.
 
-```text
-No stink detected. Syntax is clean.
-```
 ## 12. Diagnostics
 
-Lexer and parser errors include line and column information.
+Lexer and parser errors include line and column information. CLI lexer failures are presented as `FART STINK`; other failures use `FART ERROR`.
 
-The CLI presents lexer failures as `FART STINK` and other failures as
-`FART ERROR`.
+Runtime errors cover undefined variables, invalid operators, invalid indexes, division by zero and incorrect function arity.
 
-Runtime errors include useful messages such as undefined variables, invalid
-operators, invalid indexes, division by zero and incorrect function arity.
-
-## 13. MVP grammar
+## 13. Grammar
 
 ```text
 program -> declaration* EOF
-
 declaration -> functionDeclaration | statement
-
 functionDeclaration -> "fart" IDENTIFIER "(" parameters? ")" block
 parameters -> IDENTIFIER ("," IDENTIFIER)*
 
 statement -> letStatement | ifStatement | whileStatement
            | releaseStatement | block | expressionStatement
-
 letStatement -> "let" IDENTIFIER ("=" expression)? ";"
 ifStatement -> "if" "(" expression ")" statement ("else" statement)?
 whileStatement -> "while" "(" expression ")" statement
@@ -202,9 +170,6 @@ arguments -> expression ("," expression)*
 
 ## 14. Stability boundary
 
-Version 0.9.0 freezes the current MVP semantics as the baseline for 1.0 work.
-New features may be added before 1.0, but existing documented behavior should
-not be changed casually.
+Version 1.0.0 is the stable public language baseline. Existing documented behavior should not be changed silently.
 
-Not part of the MVP: classes, async/await, modules, static typing, macros,
-concurrency, native compilation and package management.
+Not part of 1.0: classes, async/await, modules, static typing, macros, concurrency, native compilation and package management.

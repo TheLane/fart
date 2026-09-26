@@ -11,39 +11,26 @@
 - [x] Phase 6 — Functions and scopes
 - [x] Phase 7 — Arrays + living examples/jokes
 - [x] Phase 8 — Standard library
+- [x] Phase 9 — Stable MVP
+- [x] Phase 10 — Fart 1.0
 
-## Phase 8 — Standard library
+## Fart 1.0
 
-- [x] Extract standard library into src/stdlib.js
-- [x] Math helpers: abs, floor, ceil, round, sqrt
-- [x] String helpers: upper, lower, trim, contains
-- [x] Utility helpers: random, now, type, stringify
-- [x] Standard-library tests
-- [x] Executable standard-library example
+- [x] Frozen MVP syntax and semantics
+- [x] Documented language reference
+- [x] Stable CLI
+- [x] Standard library baseline
+- [x] Comprehensive automated tests
+- [x] Formatter
+- [x] CLI diagnostics with source position
+- [x] Executable examples
+- [x] Beginner tutorial
 
-The standard library deliberately stays small. Conventional function names are used in code; the humorous terminology remains in documentation and presentation.
+Fart 1.0 is the first stable public language baseline. New language features after
+1.0 should use normal semantic versioning and should not silently change existing
+documented behavior.
 
-## Phase 9 — Stable MVP
-
-- [ ] Freeze runtime semantics
-- [ ] Improve runtime diagnostics
-- [ ] Add more edge-case tests
-- [ ] Review CLI/REPL behavior
-- [ ] Document language reference
-- [ ] Prepare 0.9.0
-
-## Phase 10 — Fart 1.0
-
-- [ ] Frozen syntax
-- [ ] Documented semantics
-- [ ] Stable CLI
-- [ ] Standard library baseline
-- [ ] Comprehensive tests
-- [ ] Formatter
-- [ ] High-quality diagnostics
-- [ ] Examples and tutorial
-
-## Phase 11 — The ridiculous stuff
+## Future — The ridiculous stuff
 
 Possible future projects:
 
@@ -62,29 +49,6 @@ Possible future projects:
 
 ## Living examples and jokes
 
-The examples directory is an executable gallery of the language. docs/jokes.md is the living home for Fart terminology and jokes; update it whenever new language features create new opportunities for terrible humor.
-
-## Phase 9 — Stable MVP — completed in v0.9.0
-
-- [x] Freeze runtime semantics
-- [x] Improve runtime/CLI diagnostics
-- [x] Add edge-case tests
-- [x] Review CLI/REPL behavior
-- [x] Document language reference
-- [x] Add `fart check`
-- [x] Prepare and tag 0.9.0
-
-The v0.9.0 baseline has 32 automated tests. The CLI now separates syntax checking
-from execution, and the REPL keeps a persistent interpreter environment.
-
-## Phase 10 — Fart 1.0
-
-- [ ] Frozen syntax
-- [ ] Documented semantics
-- [ ] Stable CLI
-- [ ] Standard library baseline
-- [ ] Comprehensive tests
-- [ ] Formatter
-- [ ] High-quality diagnostics
-- [ ] Examples and tutorial
-
+The examples directory is an executable gallery of the language. `docs/jokes.md`
+is the living home for Fart terminology and jokes; update it when new features
+create new opportunities for terrible humor.

@@ -1,6 +1,6 @@
 {
   "name": "fart-language",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "Fart — a programming language that stinks, but runs.",
   "type": "module",
   "private": true,

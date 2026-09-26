@@ -3,13 +3,13 @@
 > A programming language that stinks, but runs.
 
 Fart is a deliberately humorous programming language with a real interpreter,
-lexer, parser, runtime, standard library, CLI and test suite.
+lexer, parser, runtime, standard library, CLI, formatter and test suite.
 
 ## Status
 
-**Stable MVP — v0.9.0**
+**Stable 1.0.0**
 
-The language runs on Node.js and uses the pipeline:
+The language runs on Node.js and uses:
 
 `source -> lexer -> parser -> AST -> interpreter`
 
@@ -21,37 +21,44 @@ Requirements: Node.js 20+.
 
 Run a program:
 
-```text
+~~~text
 fart examples/hello.fart
-```
+~~~
 
 Check syntax without executing:
 
-```text
+~~~text
 fart check examples/hello.fart
-```
+~~~
+
+Format source:
+
+~~~text
+fart fmt examples/hello.fart
+fart fmt --write examples/hello.fart
+~~~
 
 Start the REPL:
 
-```text
+~~~text
 fart repl
-```
+~~~
 
 Show the version:
 
-```text
+~~~text
 fart --version
-```
+~~~
 
 ## Example
 
-```fart
+~~~fart
 fart main() {
     let gas = [10, 20, 30];
     smell("Gas bag:", gas);
     release gas[1] + 22;
 }
-```
+~~~
 
 ## Core features
 
@@ -64,8 +71,14 @@ fart main() {
 - built-in `smell` and `length`
 - standard library helpers
 - REPL and syntax checking
+- formatter
 - line/column diagnostics
-- 32 automated tests
+- 34 automated tests
 
-See [SPEC.md](SPEC.md) for the language reference and [ROADMAP.md](ROADMAP.md)
-for the development history.
+See [SPEC.md](SPEC.md) for the language reference,
+[docs/tutorial.md](docs/tutorial.md) for the beginner tutorial, and
+[ROADMAP.md](ROADMAP.md) for project history.
+
+## Project rule
+
+**The joke is the presentation. The implementation should be serious.**
