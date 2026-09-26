@@ -1,0 +1,8 @@
+fart main() {
+    let gas = 3;
+    while (gas > 0) {
+        smell(gas);
+        gas = gas - 1;
+    }
+    release 42;
+}
